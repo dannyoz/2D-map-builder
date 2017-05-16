@@ -1,5 +1,5 @@
 <template>
-    <div class="main-panel">Main panel {{count}}</div>
+    <div class="main-panel">Main panel <pre>{{currentTile | json}}</pre></div>
 </template>
 
 <script>
@@ -11,8 +11,11 @@
             }
         },
         computed: {
-            count() {
-                return store.state.count;
+            currentTile() {
+                return store.state.currentTile;
+            },
+            mapSize() {
+                return store.state.mapSize;
             }
         }
     }

@@ -4,10 +4,10 @@ $defaultVendors   : "";
 $animationVendors : "";
 $transformVendors : "";
 
-$primary: $col-river-blue;
+$primary: $col-wet-asphalt;
 $secondary: $col-amethyst;
 
-$idebarWidth: 400px;
+$idebarWidth: 350px;
 
 @include normalise;
 @include googleFont('roboto', body button input);

@@ -33,7 +33,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-33f3c92a", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"./main-panel/main-panel.vue":2,"./side-bar/side-bar.vue":3,"vue":8,"vue-hot-reload-api":7}],2:[function(require,module,exports){
+},{"./main-panel/main-panel.vue":2,"./side-bar/side-bar.vue":3,"vue":10,"vue-hot-reload-api":9}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -54,13 +54,16 @@ exports.default = {
     },
 
     computed: {
-        count: function count() {
-            return _store2.default.state.count;
+        currentTile: function currentTile() {
+            return _store2.default.state.currentTile;
+        },
+        mapSize: function mapSize() {
+            return _store2.default.state.mapSize;
         }
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"main-panel\">Main panel {{count}}</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"main-panel\">Main panel <pre>{{currentTile | json}}</pre></div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -71,7 +74,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-3784d4f0", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../shared/store":5,"vue":8,"vue-hot-reload-api":7}],3:[function(require,module,exports){
+},{"../../shared/store":6,"vue":10,"vue-hot-reload-api":9}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -82,29 +85,37 @@ var _store = require('../../shared/store');
 
 var _store2 = _interopRequireDefault(_store);
 
+var _utils = require('../../shared/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _tiles = require('./tiles.vue');
+
+var _tiles2 = _interopRequireDefault(_tiles);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-    data: function data() {
-        return {
-            spriteWidth: 10,
-            spriteHeight: 10
-        };
+    components: {
+        tiles: _tiles2.default
     },
-
     computed: {
-        count: function count() {
-            return _store2.default.state.count;
-        }
-    },
-    methods: {
-        test: function test() {
-            _store2.default.commit('increment');
+        spriteHeight: function spriteHeight() {
+            return _store2.default.state.sprite.height;
+        },
+        spriteWidth: function spriteWidth() {
+            return _store2.default.state.sprite.width;
+        },
+        spriteMap: function spriteMap() {
+            return _utils2.default.sideBarMap(this.spriteHeight, this.spriteWidth);
+        },
+        hidden: function hidden() {
+            return _utils2.default.isHidden();
         }
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"side-bar\">\n    <button @click=\"test\">Test</button>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"side-bar\">\n    <tiles :tiles=\"spriteMap.tiles\" :hidden=\"hidden\"></tiles>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -115,7 +126,62 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-03cfb468", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../shared/store":5,"vue":8,"vue-hot-reload-api":7}],4:[function(require,module,exports){
+},{"../../shared/store":6,"../../shared/utils":7,"./tiles.vue":4,"vue":10,"vue-hot-reload-api":9}],4:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _utils = require('../../shared/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _store = require('../../shared/store');
+
+var _store2 = _interopRequireDefault(_store);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+    data: function data() {
+        return {
+            currentIndex: null
+        };
+    },
+
+    props: {
+        tiles: Array,
+        hidden: Boolean
+    },
+    ready: function ready() {
+        this.selectTile(0);
+    },
+
+    methods: {
+        tilebg: function tilebg(tile) {
+            return _utils2.default.tilebg(tile);
+        },
+        selectTile: function selectTile(index) {
+            var tile = this.tiles[index];
+            this.currentIndex = index;
+            _store2.default.commit('selectTile', tile);
+        }
+    }
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"tiles\">\n    <div class=\"tile\" @click=\"selectTile($index)\" :class=\"{'hidden': hidden, 'tile--active': currentIndex == $index}\" v-for=\"tile in tiles\">\n        <div v-if=\"!hidden\" class=\"tile__icon\" :class=\"{'tile--active': currentIndex == $index}\" :style=\"tilebg(tile)\"></div>\n        <span v-if=\"hidden\" class=\"centre\">{{tile.position.x}} - {{tile.position.y}}</span>\n    </div>\n</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-bc379a6c", module.exports)
+  } else {
+    hotAPI.update("_v-bc379a6c", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"../../shared/store":6,"../../shared/utils":7,"vue":10,"vue-hot-reload-api":9}],5:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -135,7 +201,7 @@ new _vue2['default']({
   }
 });
 
-},{"./components/index.vue":1,"vue":8}],5:[function(require,module,exports){
+},{"./components/index.vue":1,"vue":10}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -152,15 +218,21 @@ var _vuex = require('vuex');
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
+var _utils = require('./utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
 _vue2['default'].use(_vuex2['default']);
 
 var store = new _vuex2['default'].Store({
     state: {
-        count: 0
+        sprite: { "width": 10, "height": 10 },
+        mapSize: { "x": 50, "y": 50 },
+        currentTile: 0
     },
     mutations: {
-        increment: function increment(state) {
-            state.count++;
+        selectTile: function selectTile(state, tile) {
+            state.currentTile = tile;
         }
     }
 });
@@ -168,7 +240,51 @@ var store = new _vuex2['default'].Store({
 exports['default'] = store;
 module.exports = exports['default'];
 
-},{"vue":8,"vuex":9}],6:[function(require,module,exports){
+},{"./utils":7,"vue":10,"vuex":11}],7:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = {
+    sideBarMap: function sideBarMap(height, width) {
+        var grid = [];
+        var tiles = [];
+        for (var y = 0; y < height; y++) {
+            var columns = [];
+            for (var x = 0; x < width; x++) {
+                var tile = {
+                    position: { x: x, y: y }
+                };
+                columns.push(tile);
+                tiles.push(tile);
+            }
+            grid.push(columns);
+        }
+        return {
+            grid: grid,
+            tiles: tiles
+        };
+    },
+    isHidden: function isHidden() {
+        var mode = location.search.replace("?hidden=", "");
+        var bool = mode == "true" ? true : false;
+        return bool;
+    },
+    tilebg: function tilebg(tile) {
+        var imgPath = "../img/worlds/streets/sprite-map.png";
+        var size = 64;
+        var x = size * tile.position.x;
+        var y = size * tile.position.y;
+        return {
+            "background": "url(" + imgPath + ")",
+            "backgroundPosition": "-" + x + "px -" + y + "px"
+        };
+    }
+};
+module.exports = exports["default"];
+
+},{}],8:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -233,7 +349,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],7:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 var Vue // late bind
 var map = Object.create(null)
 var shimmed = false
@@ -534,7 +650,7 @@ function format (id) {
   return match ? match[0] : id
 }
 
-},{}],8:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 (function (process){
 /*!
  * Vue.js v1.0.28
@@ -10775,7 +10891,7 @@ setTimeout(function () {
 
 module.exports = Vue;
 }).call(this,require("7YKIPe"))
-},{"7YKIPe":6}],9:[function(require,module,exports){
+},{"7YKIPe":8}],11:[function(require,module,exports){
 /**
  * vuex v2.3.0
  * (c) 2017 Evan You
@@ -11586,4 +11702,4 @@ return index;
 
 })));
 
-},{}]},{},[4])
+},{}]},{},[5])

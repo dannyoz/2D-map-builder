@@ -1,26 +1,30 @@
 <template>
     <div class="side-bar">
-        <button @click="test">Test</button>
+        <tiles :tiles="spriteMap.tiles" :hidden="hidden"></tiles>
     </div>
 </template>
 
 <script>
     import store from '../../shared/store';
+    import utils from '../../shared/utils';
+    import tiles from './tiles.vue';
+
     export default {
-        data() {
-            return {
-                spriteWidth: 10,
-                spriteHeight: 10
-            }
+        components: {
+            tiles
         },
         computed: {
-            count() {
-                return store.state.count;
-            }
-        },
-        methods: {
-            test() {
-                store.commit('increment');
+            spriteHeight() {
+                return store.state.sprite.height;
+            },
+            spriteWidth() {
+                return store.state.sprite.width;
+            },
+            spriteMap() {
+                return utils.sideBarMap(this.spriteHeight, this.spriteWidth);
+            },
+            hidden() {
+                return utils.isHidden();
             }
         }
     }

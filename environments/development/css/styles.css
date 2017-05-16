@@ -87,7 +87,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   font-family: Roboto, arial, sans-serif; }
 
 body {
-  color: #3498DB;
+  color: #34495E;
   line-height: 28px;
   line-height: 1.75rem;
   font-size: 16px;
@@ -136,7 +136,7 @@ body {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 400px;
+  left: 350px;
   right: 0;
   overflow: auto; }
   .main-panel::-webkit-scrollbar {
@@ -154,7 +154,8 @@ body {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 400px;
+  width: 350px;
+  background-color: #2d3238;
   left: 0;
   overflow: auto; }
   .side-bar::-webkit-scrollbar {
@@ -162,8 +163,27 @@ body {
     height: 10px;
     padding: 10px; }
   .side-bar::-webkit-scrollbar-track {
-    background: #f7f7f7; }
+    background: #16191c; }
   .side-bar::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background: #c4c4c4;
-    border: 2px solid #f7f7f7; }
+    background: #444b54;
+    border: 2px solid #16191c; }
+  .side-bar .tiles .tile {
+    position: relative;
+    margin: 10px;
+    display: inline-flex;
+    width: 64px;
+    height: 64px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    color: #c6cbd1; }
+    .side-bar .tiles .tile--active {
+      box-shadow: inset 0 2px 0 #9B59B6, inset 2px 0 0 #9B59B6, inset 0 -2px 0 #9B59B6, inset -2px 0 0 #9B59B6; }
+    .side-bar .tiles .tile__icon {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px; }
+    .side-bar .tiles .tile.hidden {
+      background: #383f46 !important; }
