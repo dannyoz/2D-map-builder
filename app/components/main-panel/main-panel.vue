@@ -1,22 +1,14 @@
 <template>
-    <div class="main-panel">Main panel <pre>{{currentTile | json}}</pre></div>
+    <div class="main-panel">
+         <map></map>
+    </div>
 </template>
 
 <script>
-    import store from '../../shared/store';
+    import map from './map.vue';
     export default {
-        data() {
-            return {
-                main: true
-            }
+        components: {
+            map
         },
-        computed: {
-            currentTile() {
-                return store.state.currentTile;
-            },
-            mapSize() {
-                return store.state.mapSize;
-            }
-        }
     }
 </script>

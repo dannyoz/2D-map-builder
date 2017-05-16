@@ -8,6 +8,7 @@ $primary: $col-wet-asphalt;
 $secondary: $col-amethyst;
 
 $idebarWidth: 350px;
+$tileSize: 64px;
 
 @include normalise;
 @include googleFont('roboto', body button input);

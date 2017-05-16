@@ -7,7 +7,7 @@ const store = new Vuex.Store({
     state: {
         sprite: {"width": 10, "height": 10},
         mapSize: {"x": 50, "y": 50},
-        currentTile: 0,
+        currentTile: null,
     },
     mutations: {
         selectTile(state, tile) {

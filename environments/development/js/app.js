@@ -33,37 +33,26 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-33f3c92a", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"./main-panel/main-panel.vue":2,"./side-bar/side-bar.vue":3,"vue":10,"vue-hot-reload-api":9}],2:[function(require,module,exports){
+},{"./main-panel/main-panel.vue":2,"./side-bar/side-bar.vue":4,"vue":11,"vue-hot-reload-api":10}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _store = require('../../shared/store');
+var _map = require('./map.vue');
 
-var _store2 = _interopRequireDefault(_store);
+var _map2 = _interopRequireDefault(_map);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-    data: function data() {
-        return {
-            main: true
-        };
-    },
-
-    computed: {
-        currentTile: function currentTile() {
-            return _store2.default.state.currentTile;
-        },
-        mapSize: function mapSize() {
-            return _store2.default.state.mapSize;
-        }
+    components: {
+        map: _map2.default
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"main-panel\">Main panel <pre>{{currentTile | json}}</pre></div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"main-panel\">\n     <map></map>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -74,7 +63,66 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-3784d4f0", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../shared/store":6,"vue":10,"vue-hot-reload-api":9}],3:[function(require,module,exports){
+},{"./map.vue":3,"vue":11,"vue-hot-reload-api":10}],3:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _store = require('../../shared/store');
+
+var _store2 = _interopRequireDefault(_store);
+
+var _utils = require('../../shared/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+    data: function data() {
+        return {
+            grid: []
+        };
+    },
+
+    props: {
+        currentTile: Object
+    },
+    ready: function ready() {
+        this.grid = _utils2.default.createGrid(this.mapSize.x, this.mapSize.y);
+    },
+
+    computed: {
+        currentTile: function currentTile() {
+            return _store2.default.state.currentTile;
+        },
+        mapSize: function mapSize() {
+            return _store2.default.state.mapSize;
+        }
+    },
+    methods: {
+        drawTile: function drawTile(cell) {
+            var y = cell.gridPosition.y;
+            var x = cell.gridPosition.x;
+            this.grid[y][x].tile = this.currentTile;
+        }
+    }
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"grid\" :style=\"{'width': `${64 * mapSize.x}px`}\">\n    <div class=\"grid__row\" v-for=\"row in grid\">\n        <div @click=\"drawTile(cell)\" class=\"grid__cell\" v-for=\"cell in row\" :class=\"{'grid__cell--unassigned': !cell.tile}\">\n            <span v-if=\"cell.tile\" class=\"centre\">{{cell.tile.position.x}} - {{cell.tile.position.y}}</span>\n        </div>\n    </div>\n</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-539063f4", module.exports)
+  } else {
+    hotAPI.update("_v-539063f4", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"../../shared/store":7,"../../shared/utils":8,"vue":11,"vue-hot-reload-api":10}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -107,7 +155,7 @@ exports.default = {
             return _store2.default.state.sprite.width;
         },
         spriteMap: function spriteMap() {
-            return _utils2.default.sideBarMap(this.spriteHeight, this.spriteWidth);
+            return _utils2.default.sideBarMap(this.spriteWidth, this.spriteHeight);
         },
         hidden: function hidden() {
             return _utils2.default.isHidden();
@@ -126,7 +174,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-03cfb468", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../shared/store":6,"../../shared/utils":7,"./tiles.vue":4,"vue":10,"vue-hot-reload-api":9}],4:[function(require,module,exports){
+},{"../../shared/store":7,"../../shared/utils":8,"./tiles.vue":5,"vue":11,"vue-hot-reload-api":10}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -181,7 +229,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-bc379a6c", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../shared/store":6,"../../shared/utils":7,"vue":10,"vue-hot-reload-api":9}],5:[function(require,module,exports){
+},{"../../shared/store":7,"../../shared/utils":8,"vue":11,"vue-hot-reload-api":10}],6:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -201,7 +249,7 @@ new _vue2['default']({
   }
 });
 
-},{"./components/index.vue":1,"vue":10}],6:[function(require,module,exports){
+},{"./components/index.vue":1,"vue":11}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -228,7 +276,7 @@ var store = new _vuex2['default'].Store({
     state: {
         sprite: { "width": 10, "height": 10 },
         mapSize: { "x": 50, "y": 50 },
-        currentTile: 0
+        currentTile: null
     },
     mutations: {
         selectTile: function selectTile(state, tile) {
@@ -240,14 +288,29 @@ var store = new _vuex2['default'].Store({
 exports['default'] = store;
 module.exports = exports['default'];
 
-},{"./utils":7,"vue":10,"vuex":11}],7:[function(require,module,exports){
+},{"./utils":8,"vue":11,"vuex":12}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports["default"] = {
-    sideBarMap: function sideBarMap(height, width) {
+    createGrid: function createGrid(width, height) {
+        var grid = [];
+        for (var y = 0; y < height; y++) {
+            var columns = [];
+            for (var x = 0; x < width; x++) {
+                var tile = {
+                    gridPosition: { x: x, y: y },
+                    tile: null
+                };
+                columns.push(tile);
+            }
+            grid.push(columns);
+        }
+        return grid;
+    },
+    sideBarMap: function sideBarMap(width, height) {
         var grid = [];
         var tiles = [];
         for (var y = 0; y < height; y++) {
@@ -284,7 +347,7 @@ exports["default"] = {
 };
 module.exports = exports["default"];
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -349,7 +412,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 var Vue // late bind
 var map = Object.create(null)
 var shimmed = false
@@ -650,7 +713,7 @@ function format (id) {
   return match ? match[0] : id
 }
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 (function (process){
 /*!
  * Vue.js v1.0.28
@@ -10891,7 +10954,7 @@ setTimeout(function () {
 
 module.exports = Vue;
 }).call(this,require("7YKIPe"))
-},{"7YKIPe":8}],11:[function(require,module,exports){
+},{"7YKIPe":9}],12:[function(require,module,exports){
 /**
  * vuex v2.3.0
  * (c) 2017 Evan You
@@ -11702,4 +11765,4 @@ return index;
 
 })));
 
-},{}]},{},[5])
+},{}]},{},[6])

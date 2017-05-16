@@ -1,5 +1,20 @@
 export default {
-    sideBarMap(height, width){
+    createGrid(width, height){
+        const grid = [];
+        for (let y = 0; y < height; y++) {
+            const columns = [];
+            for (let x = 0; x < width; x++) {
+                const tile = {
+                    gridPosition: {x,y},
+                    tile: null
+                };
+                columns.push(tile);
+            }
+            grid.push(columns);
+        }
+        return grid;
+    },
+    sideBarMap(width, height){
         const grid = [];
         const tiles = [];
         for (let y = 0; y < height; y++) {

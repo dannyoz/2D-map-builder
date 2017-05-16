@@ -21,7 +21,7 @@
                 return store.state.sprite.width;
             },
             spriteMap() {
-                return utils.sideBarMap(this.spriteHeight, this.spriteWidth);
+                return utils.sideBarMap(this.spriteWidth, this.spriteHeight);
             },
             hidden() {
                 return utils.isHidden();
