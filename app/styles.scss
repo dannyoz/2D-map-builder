@@ -1,2 +1,6 @@
 @import "../node_modules/spice-sass/src/spice";
 @import "shared/global-styles";
+
+@import "components/main-panel/main-panel";
+@import "components/side-bar/side-bar";
+@import "components/controls/controls";

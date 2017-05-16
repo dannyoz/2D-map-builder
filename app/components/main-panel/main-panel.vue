@@ -1,13 +1,14 @@
 <template>
-    <div class="main-panel">Main panel</div>
+    <div class="main-panel">
+         <map></map>
+    </div>
 </template>
 
 <script>
+    import map from './map.vue';
     export default {
-        data() {
-            return {
-                main: true
-            }
-        }
+        components: {
+            map
+        },
     }
 </script>
