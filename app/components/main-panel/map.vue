@@ -2,7 +2,8 @@
     <div class="grid" :style="{'width': `${64 * mapSize.x}px`}">
         <div class="grid__row" v-for="row in grid">
             <div @click="drawTile(cell)" class="grid__cell" v-for="cell in row" :class="{'grid__cell--unassigned': !cell.tile}">
-                <span v-if="cell.tile" class="centre">{{cell.tile.position.x}} - {{cell.tile.position.y}}</span>
+                <div v-if="cell.tile && !hidden" class="grid__cell__icon" :style="tilebg(cell.tile)"></div>
+                <span v-if="cell.tile && hidden" class="centre">{{cell.tile.position.x}} - {{cell.tile.position.y}}</span>
             </div>
         </div>
     </div>
@@ -21,7 +22,7 @@
             currentTile: Object,
         },
         ready() {
-            this.grid = utils.createGrid(this.mapSize.x, this.mapSize.y);
+            this.loadGrid();
         },
         computed: {
             currentTile() {
@@ -29,13 +30,30 @@
             },
             mapSize() {
                 return store.state.mapSize;
+            },
+            hidden() {
+                return utils.isHidden();
             }
         },
         methods: {
+            loadGrid() {
+                const savedGrid = localStorage.getItem("grid");
+                const saveData = JSON.parse(savedGrid);
+                if (saveData) {
+                    this.grid = saveData;
+                } else {
+                    this.grid = utils.createGrid(this.mapSize.x, this.mapSize.y);
+                } 
+            },
             drawTile(cell) {
                 const y = cell.gridPosition.y;
                 const x = cell.gridPosition.x;
                 this.grid[y][x].tile = this.currentTile;
+                const data = JSON.stringify(this.grid);
+                localStorage.setItem("grid", data);
+            },
+            tilebg(tile) {
+                return utils.tilebg(tile);
             }
         }
     }

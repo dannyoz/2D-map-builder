@@ -1,0 +1,10 @@
+$controls-height:40px;
+
+.controls {
+    height: $controls-height;
+    @include fitContainer(0 0 auto 0);
+}
+
+.app {
+    @include fitContainer($controls-height 0 0 0);
+}

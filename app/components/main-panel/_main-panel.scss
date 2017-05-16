@@ -20,10 +20,15 @@ $grid-line-col: contrast($main-panel-col, 5%);
             height: $tileSize;
             font-size: 0.8rem;
             cursor: pointer;
+            color: contrast($main-panel-col, 60%);
 
             &--unassigned{
                 $size: 1px;
                 box-shadow: inset 0 $size 0 $grid-line-col, inset $size 0 0 $grid-line-col, inset 0 (-$size) 0 $grid-line-col, inset (-$size) 0 0 $grid-line-col;
+            }
+
+            &__icon {
+                @include fitContainer;
             }
         }
     }

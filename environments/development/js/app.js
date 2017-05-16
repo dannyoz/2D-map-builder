@@ -1,9 +1,25 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"controls\">\n\tcontrols\n</div>\t\t\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-25143088", module.exports)
+  } else {
+    hotAPI.update("_v-25143088", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"vue":15,"vue-hot-reload-api":14}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+
+var _controls = require('./controls/controls.vue');
+
+var _controls2 = _interopRequireDefault(_controls);
 
 var _sideBar = require('./side-bar/side-bar.vue');
 
@@ -17,12 +33,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = {
 	components: {
+		controls: _controls2.default,
 		sideBar: _sideBar2.default,
 		mainPanel: _mainPanel2.default
 	}
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<side-bar></side-bar>\n<main-panel></main-panel>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<controls></controls>\n<div class=\"app\">\n\t<side-bar></side-bar>\n\t<main-panel></main-panel>\n</div>\t\t\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -33,7 +50,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-33f3c92a", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"./main-panel/main-panel.vue":2,"./side-bar/side-bar.vue":4,"vue":11,"vue-hot-reload-api":10}],2:[function(require,module,exports){
+},{"./controls/controls.vue":1,"./main-panel/main-panel.vue":3,"./side-bar/side-bar.vue":5,"vue":15,"vue-hot-reload-api":14}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -63,12 +80,16 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-3784d4f0", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"./map.vue":3,"vue":11,"vue-hot-reload-api":10}],3:[function(require,module,exports){
+},{"./map.vue":4,"vue":15,"vue-hot-reload-api":14}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _stringify = require('babel-runtime/core-js/json/stringify');
+
+var _stringify2 = _interopRequireDefault(_stringify);
 
 var _store = require('../../shared/store');
 
@@ -91,7 +112,7 @@ exports.default = {
         currentTile: Object
     },
     ready: function ready() {
-        this.grid = _utils2.default.createGrid(this.mapSize.x, this.mapSize.y);
+        this.loadGrid();
     },
 
     computed: {
@@ -100,18 +121,35 @@ exports.default = {
         },
         mapSize: function mapSize() {
             return _store2.default.state.mapSize;
+        },
+        hidden: function hidden() {
+            return _utils2.default.isHidden();
         }
     },
     methods: {
+        loadGrid: function loadGrid() {
+            var savedGrid = localStorage.getItem("grid");
+            var saveData = JSON.parse(savedGrid);
+            if (saveData) {
+                this.grid = saveData;
+            } else {
+                this.grid = _utils2.default.createGrid(this.mapSize.x, this.mapSize.y);
+            }
+        },
         drawTile: function drawTile(cell) {
             var y = cell.gridPosition.y;
             var x = cell.gridPosition.x;
             this.grid[y][x].tile = this.currentTile;
+            var data = (0, _stringify2.default)(this.grid);
+            localStorage.setItem("grid", data);
+        },
+        tilebg: function tilebg(tile) {
+            return _utils2.default.tilebg(tile);
         }
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"grid\" :style=\"{'width': `${64 * mapSize.x}px`}\">\n    <div class=\"grid__row\" v-for=\"row in grid\">\n        <div @click=\"drawTile(cell)\" class=\"grid__cell\" v-for=\"cell in row\" :class=\"{'grid__cell--unassigned': !cell.tile}\">\n            <span v-if=\"cell.tile\" class=\"centre\">{{cell.tile.position.x}} - {{cell.tile.position.y}}</span>\n        </div>\n    </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"grid\" :style=\"{'width': `${64 * mapSize.x}px`}\">\n    <div class=\"grid__row\" v-for=\"row in grid\">\n        <div @click=\"drawTile(cell)\" class=\"grid__cell\" v-for=\"cell in row\" :class=\"{'grid__cell--unassigned': !cell.tile}\">\n            <div v-if=\"cell.tile &amp;&amp; !hidden\" class=\"grid__cell__icon\" :style=\"tilebg(cell.tile)\"></div>\n            <span v-if=\"cell.tile &amp;&amp; hidden\" class=\"centre\">{{cell.tile.position.x}} - {{cell.tile.position.y}}</span>\n        </div>\n    </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -122,7 +160,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-539063f4", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../shared/store":7,"../../shared/utils":8,"vue":11,"vue-hot-reload-api":10}],4:[function(require,module,exports){
+},{"../../shared/store":8,"../../shared/utils":9,"babel-runtime/core-js/json/stringify":10,"vue":15,"vue-hot-reload-api":14}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -174,7 +212,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-03cfb468", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../shared/store":7,"../../shared/utils":8,"./tiles.vue":5,"vue":11,"vue-hot-reload-api":10}],5:[function(require,module,exports){
+},{"../../shared/store":8,"../../shared/utils":9,"./tiles.vue":6,"vue":15,"vue-hot-reload-api":14}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -229,7 +267,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-bc379a6c", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../shared/store":7,"../../shared/utils":8,"vue":11,"vue-hot-reload-api":10}],6:[function(require,module,exports){
+},{"../../shared/store":8,"../../shared/utils":9,"vue":15,"vue-hot-reload-api":14}],7:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -249,7 +287,7 @@ new _vue2['default']({
   }
 });
 
-},{"./components/index.vue":1,"vue":11}],7:[function(require,module,exports){
+},{"./components/index.vue":2,"vue":15}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -288,7 +326,7 @@ var store = new _vuex2['default'].Store({
 exports['default'] = store;
 module.exports = exports['default'];
 
-},{"./utils":8,"vue":11,"vuex":12}],8:[function(require,module,exports){
+},{"./utils":9,"vue":15,"vuex":16}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -347,7 +385,18 @@ exports["default"] = {
 };
 module.exports = exports["default"];
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
+module.exports = { "default": require("core-js/library/fn/json/stringify"), __esModule: true };
+},{"core-js/library/fn/json/stringify":11}],11:[function(require,module,exports){
+var core  = require('../../modules/_core')
+  , $JSON = core.JSON || (core.JSON = {stringify: JSON.stringify});
+module.exports = function stringify(it){ // eslint-disable-line no-unused-vars
+  return $JSON.stringify.apply($JSON, arguments);
+};
+},{"../../modules/_core":12}],12:[function(require,module,exports){
+var core = module.exports = {version: '2.4.0'};
+if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
+},{}],13:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -412,7 +461,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],10:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 var Vue // late bind
 var map = Object.create(null)
 var shimmed = false
@@ -713,7 +762,7 @@ function format (id) {
   return match ? match[0] : id
 }
 
-},{}],11:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 (function (process){
 /*!
  * Vue.js v1.0.28
@@ -10954,7 +11003,7 @@ setTimeout(function () {
 
 module.exports = Vue;
 }).call(this,require("7YKIPe"))
-},{"7YKIPe":9}],12:[function(require,module,exports){
+},{"7YKIPe":13}],16:[function(require,module,exports){
 /**
  * vuex v2.3.0
  * (c) 2017 Evan You
@@ -11765,4 +11814,4 @@ return index;
 
 })));
 
-},{}]},{},[6])
+},{}]},{},[7])
