@@ -1,0 +1,4 @@
+.main-panel {
+    @include sideBarAppend($idebarWidth);
+    @include scrollbar;
+}

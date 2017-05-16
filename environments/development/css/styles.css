@@ -126,18 +126,44 @@ body {
     font-size: 20px;
     font-size: 1.25rem; }
 
-h1, h2, h3, h4, h5, h6 {
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 0.3rem; }
-
 .centre {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%); }
 
-.container {
-  margin: 0 auto;
-  max-width: 1280px;
-  padding: 0 20px; }
+.main-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 400px;
+  right: 0;
+  overflow: auto; }
+  .main-panel::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    padding: 10px; }
+  .main-panel::-webkit-scrollbar-track {
+    background: #f7f7f7; }
+  .main-panel::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #c4c4c4;
+    border: 2px solid #f7f7f7; }
+
+.side-bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 400px;
+  left: 0;
+  overflow: auto; }
+  .side-bar::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    padding: 10px; }
+  .side-bar::-webkit-scrollbar-track {
+    background: #f7f7f7; }
+  .side-bar::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #c4c4c4;
+    border: 2px solid #f7f7f7; }
