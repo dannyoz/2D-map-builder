@@ -4,8 +4,12 @@ $defaultVendors   : "";
 $animationVendors : "";
 $transformVendors : "";
 
+// colours
 $primary: $col-wet-asphalt;
 $secondary: $col-amethyst;
+$sidebarCol : #2d3238;
+$main-panel-col: #383a3e;
+$grid-line-col: contrast($main-panel-col, 5%);
 
 $idebarWidth: 350px;
 $tileSize: 64px;

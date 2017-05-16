@@ -1,5 +1,28 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"controls\">\n\tcontrols\n</div>\t\t\n"
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _sideBarControls = require('./side-bar-controls.vue');
+
+var _sideBarControls2 = _interopRequireDefault(_sideBarControls);
+
+var _mainPanelControls = require('./main-panel-controls.vue');
+
+var _mainPanelControls2 = _interopRequireDefault(_mainPanelControls);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+	components: {
+		sideBarControls: _sideBarControls2.default,
+		mainPanelControls: _mainPanelControls2.default
+	}
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"controls\">\n\t<side-bar-controls></side-bar-controls>\n\t<main-panel-controls></main-panel-controls>\n</div>\t\t\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -10,7 +33,76 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-25143088", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":15,"vue-hot-reload-api":14}],2:[function(require,module,exports){
+},{"./main-panel-controls.vue":2,"./side-bar-controls.vue":3,"vue":17,"vue-hot-reload-api":16}],2:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _store = require('../../shared/store');
+
+var _store2 = _interopRequireDefault(_store);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+    data: function data() {
+        return {
+            zoom: 100
+        };
+    },
+
+    methods: {
+        handleZoom: function handleZoom() {
+            _store2.default.commit('setZoom', this.zoom);
+        }
+    }
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"main-panel-controls\">\n    <input type=\"range\" min=\"10\" max=\"100\" v-model=\"zoom\" @change=\"handleZoom\">\n</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-5decd991", module.exports)
+  } else {
+    hotAPI.update("_v-5decd991", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"../../shared/store":10,"vue":17,"vue-hot-reload-api":16}],3:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    data: function data() {
+        return {
+            tabs: ['settings', 'tiles']
+        };
+    },
+
+    methods: {
+        switchTab: function switchTab() {
+            console.log('switch');
+        }
+    }
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"side-bar-controls\">\n    tabs\n</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-7412ce84", module.exports)
+  } else {
+    hotAPI.update("_v-7412ce84", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"vue":17,"vue-hot-reload-api":16}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -50,7 +142,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-33f3c92a", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"./controls/controls.vue":1,"./main-panel/main-panel.vue":3,"./side-bar/side-bar.vue":5,"vue":15,"vue-hot-reload-api":14}],3:[function(require,module,exports){
+},{"./controls/controls.vue":1,"./main-panel/main-panel.vue":5,"./side-bar/side-bar.vue":7,"vue":17,"vue-hot-reload-api":16}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -80,7 +172,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-3784d4f0", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"./map.vue":4,"vue":15,"vue-hot-reload-api":14}],4:[function(require,module,exports){
+},{"./map.vue":6,"vue":17,"vue-hot-reload-api":16}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -124,6 +216,9 @@ exports.default = {
         },
         hidden: function hidden() {
             return _utils2.default.isHidden();
+        },
+        zoom: function zoom() {
+            return _store2.default.state.zoom;
         }
     },
     methods: {
@@ -145,11 +240,18 @@ exports.default = {
         },
         tilebg: function tilebg(tile) {
             return _utils2.default.tilebg(tile);
+        },
+        calculateGridSize: function calculateGridSize() {
+            var value = this.zoom / 100;
+            return {
+                'transform': 'scale(' + value + ')',
+                'width': 64 * this.mapSize.x + 'px'
+            };
         }
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"grid\" :style=\"{'width': `${64 * mapSize.x}px`}\">\n    <div class=\"grid__row\" v-for=\"row in grid\">\n        <div @click=\"drawTile(cell)\" class=\"grid__cell\" v-for=\"cell in row\" :class=\"{'grid__cell--unassigned': !cell.tile}\">\n            <div v-if=\"cell.tile &amp;&amp; !hidden\" class=\"grid__cell__icon\" :style=\"tilebg(cell.tile)\"></div>\n            <span v-if=\"cell.tile &amp;&amp; hidden\" class=\"centre\">{{cell.tile.position.x}} - {{cell.tile.position.y}}</span>\n        </div>\n    </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"grid\" :style=\"calculateGridSize()\">\n    <div class=\"grid__row\" v-for=\"row in grid\">\n        <div @click=\"drawTile(cell)\" class=\"grid__cell\" v-for=\"cell in row\" :class=\"{'grid__cell--unassigned': !cell.tile}\">\n            <div v-if=\"cell.tile &amp;&amp; !hidden\" class=\"grid__cell__icon\" :style=\"tilebg(cell.tile)\"></div>\n            <span v-if=\"cell.tile &amp;&amp; hidden\" class=\"centre\">{{cell.tile.position.x}} - {{cell.tile.position.y}}</span>\n        </div>\n    </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -160,7 +262,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-539063f4", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../shared/store":8,"../../shared/utils":9,"babel-runtime/core-js/json/stringify":10,"vue":15,"vue-hot-reload-api":14}],5:[function(require,module,exports){
+},{"../../shared/store":10,"../../shared/utils":11,"babel-runtime/core-js/json/stringify":12,"vue":17,"vue-hot-reload-api":16}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -212,7 +314,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-03cfb468", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../shared/store":8,"../../shared/utils":9,"./tiles.vue":6,"vue":15,"vue-hot-reload-api":14}],6:[function(require,module,exports){
+},{"../../shared/store":10,"../../shared/utils":11,"./tiles.vue":8,"vue":17,"vue-hot-reload-api":16}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -267,7 +369,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-bc379a6c", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../shared/store":8,"../../shared/utils":9,"vue":15,"vue-hot-reload-api":14}],7:[function(require,module,exports){
+},{"../../shared/store":10,"../../shared/utils":11,"vue":17,"vue-hot-reload-api":16}],9:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -287,7 +389,7 @@ new _vue2['default']({
   }
 });
 
-},{"./components/index.vue":2,"vue":15}],8:[function(require,module,exports){
+},{"./components/index.vue":4,"vue":17}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -314,11 +416,15 @@ var store = new _vuex2['default'].Store({
     state: {
         sprite: { "width": 10, "height": 10 },
         mapSize: { "x": 50, "y": 50 },
-        currentTile: null
+        currentTile: null,
+        zoom: 100
     },
     mutations: {
         selectTile: function selectTile(state, tile) {
             state.currentTile = tile;
+        },
+        setZoom: function setZoom(state, zoom) {
+            state.zoom = zoom;
         }
     }
 });
@@ -326,7 +432,7 @@ var store = new _vuex2['default'].Store({
 exports['default'] = store;
 module.exports = exports['default'];
 
-},{"./utils":9,"vue":15,"vuex":16}],9:[function(require,module,exports){
+},{"./utils":11,"vue":17,"vuex":18}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -385,18 +491,18 @@ exports["default"] = {
 };
 module.exports = exports["default"];
 
-},{}],10:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/json/stringify"), __esModule: true };
-},{"core-js/library/fn/json/stringify":11}],11:[function(require,module,exports){
+},{"core-js/library/fn/json/stringify":13}],13:[function(require,module,exports){
 var core  = require('../../modules/_core')
   , $JSON = core.JSON || (core.JSON = {stringify: JSON.stringify});
 module.exports = function stringify(it){ // eslint-disable-line no-unused-vars
   return $JSON.stringify.apply($JSON, arguments);
 };
-},{"../../modules/_core":12}],12:[function(require,module,exports){
+},{"../../modules/_core":14}],14:[function(require,module,exports){
 var core = module.exports = {version: '2.4.0'};
 if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
-},{}],13:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -461,7 +567,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],14:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 var Vue // late bind
 var map = Object.create(null)
 var shimmed = false
@@ -762,7 +868,7 @@ function format (id) {
   return match ? match[0] : id
 }
 
-},{}],15:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 (function (process){
 /*!
  * Vue.js v1.0.28
@@ -11003,7 +11109,7 @@ setTimeout(function () {
 
 module.exports = Vue;
 }).call(this,require("7YKIPe"))
-},{"7YKIPe":13}],16:[function(require,module,exports){
+},{"7YKIPe":15}],18:[function(require,module,exports){
 /**
  * vuex v2.3.0
  * (c) 2017 Evan You
@@ -11814,4 +11920,4 @@ return index;
 
 })));
 
-},{}]},{},[7])
+},{}]},{},[9])

@@ -3,6 +3,14 @@ $controls-height:40px;
 .controls {
     height: $controls-height;
     @include fitContainer(0 0 auto 0);
+
+    .side-bar-controls {
+        @include sideBar($idebarWidth, "left", darken($sidebarCol, 5%));
+    }
+
+    .main-panel-controls {
+        @include sideBarAppend($idebarWidth, "left", darken($main-panel-col, 5%));
+    }
 }
 
 .app {

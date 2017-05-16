@@ -216,6 +216,20 @@ body {
   right: 0;
   bottom: auto;
   left: 0; }
+  .controls .side-bar-controls {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 350px;
+    background-color: #22252a;
+    left: 0; }
+  .controls .main-panel-controls {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background-color: #2c2d31;
+    left: 350px;
+    right: 0; }
 
 .app {
   position: absolute;

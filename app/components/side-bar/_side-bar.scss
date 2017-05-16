@@ -1,9 +1,10 @@
 .side-bar {
-    $sidebarCol : #2d3238;
     @include sideBar($idebarWidth, "left", $sidebarCol);
     @include scrollbar($sidebarCol);
 
     .tiles {
+
+        //opacity: 0;
 
         .tile {
             position: relative;

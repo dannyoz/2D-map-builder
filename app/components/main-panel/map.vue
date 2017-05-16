@@ -1,5 +1,5 @@
 <template>
-    <div class="grid" :style="{'width': `${64 * mapSize.x}px`}">
+    <div class="grid" :style="calculateGridSize()">
         <div class="grid__row" v-for="row in grid">
             <div @click="drawTile(cell)" class="grid__cell" v-for="cell in row" :class="{'grid__cell--unassigned': !cell.tile}">
                 <div v-if="cell.tile && !hidden" class="grid__cell__icon" :style="tilebg(cell.tile)"></div>
@@ -33,6 +33,9 @@
             },
             hidden() {
                 return utils.isHidden();
+            },
+            zoom() {
+                return store.state.zoom;
             }
         },
         methods: {
@@ -54,6 +57,13 @@
             },
             tilebg(tile) {
                 return utils.tilebg(tile);
+            },
+            calculateGridSize() {
+                const value = this.zoom / 100;
+                return {
+                    'transform': `scale(${value})`,
+                    'width': `${64 * this.mapSize.x}px`
+                }
             }
         }
     }

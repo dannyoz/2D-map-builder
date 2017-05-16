@@ -1,11 +1,10 @@
-$main-panel-col: #383a3e;
-$grid-line-col: contrast($main-panel-col, 5%);
-
 .main-panel {
     @include sideBarAppend($idebarWidth, "left", $main-panel-col);
     @include scrollbar($main-panel-col);
 
     .grid {
+
+        //opacity: 0;
 
         &__row {
             height: $tileSize;

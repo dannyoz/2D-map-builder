@@ -8,10 +8,14 @@ const store = new Vuex.Store({
         sprite: {"width": 10, "height": 10},
         mapSize: {"x": 50, "y": 50},
         currentTile: null,
+        zoom: 100
     },
     mutations: {
         selectTile(state, tile) {
             state.currentTile = tile;
+        },
+        setZoom(state, zoom) {
+            state.zoom = zoom;
         }
     }
 });
