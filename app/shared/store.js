@@ -5,10 +5,11 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
     state: {
-        sprite: {"width": 10, "height": 10},
+        sprite: {"width": 20, "height": 10},
         mapSize: {"x": 50, "y": 50},
         currentTile: null,
-        zoom: 100
+        zoom: 100,
+        currentTab:null
     },
     mutations: {
         selectTile(state, tile) {
@@ -16,6 +17,9 @@ const store = new Vuex.Store({
         },
         setZoom(state, zoom) {
             state.zoom = zoom;
+        },
+        switchTab(state, tab) {
+            state.currentTab = tab;
         }
     }
 });

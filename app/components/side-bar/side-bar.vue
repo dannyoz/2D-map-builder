@@ -1,6 +1,7 @@
 <template>
     <div class="side-bar">
-        <tiles :tiles="spriteMap.tiles" :hidden="hidden"></tiles>
+        <tiles v-if="currentTab == 'tiles'" :tiles="spriteMap.tiles" :hidden="hidden"></tiles>
+        <options v-if="currentTab == 'options'"></options>
     </div>
 </template>
 
@@ -8,10 +9,12 @@
     import store from '../../shared/store';
     import utils from '../../shared/utils';
     import tiles from './tiles.vue';
+    import options from './options.vue';
 
     export default {
         components: {
-            tiles
+            tiles,
+            options
         },
         computed: {
             spriteHeight() {
@@ -25,6 +28,9 @@
             },
             hidden() {
                 return utils.isHidden();
+            },
+            currentTab() {
+                return store.state.currentTab;
             }
         }
     }

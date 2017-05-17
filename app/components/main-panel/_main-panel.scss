@@ -19,7 +19,7 @@
             height: $tileSize;
             font-size: 0.8rem;
             cursor: pointer;
-            color: contrast($main-panel-col, 60%);
+            color: contrast($main-panel-col, 6%);
 
             &--unassigned{
                 $size: 1px;
