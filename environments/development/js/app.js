@@ -258,7 +258,7 @@ exports.default = {
         drawTile: function drawTile(cell) {
             var y = cell.gridPosition.y;
             var x = cell.gridPosition.x;
-            this.grid[y][x].tile = this.currentTile;
+            this.grid[y][x].tiles.push(this.currentTile);
             var data = (0, _stringify2.default)(this.grid);
             localStorage.setItem("grid", data);
         },
@@ -275,7 +275,7 @@ exports.default = {
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"grid\" :style=\"calculateGridSize()\">\n    <div class=\"grid__row\" v-for=\"row in grid\">\n        <div @click=\"drawTile(cell)\" class=\"grid__cell\" v-for=\"cell in row\" :class=\"{'grid__cell--unassigned': !cell.tile}\">\n            <div v-if=\"cell.tile &amp;&amp; !hidden\" class=\"grid__cell__icon\" :style=\"tilebg(cell.tile)\"></div>\n            <span v-if=\"cell.tile &amp;&amp; hidden\" class=\"centre\">{{cell.tile.position.x}} - {{cell.tile.position.y}}</span>\n        </div>\n    </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"grid\" :style=\"calculateGridSize()\">\n    <div class=\"grid__row\" v-for=\"row in grid\">\n        <div @click=\"drawTile(cell)\" class=\"grid__cell\" v-for=\"cell in row\" :class=\"{'grid__cell--unassigned': !cell.tile}\">\n            <div v-if=\"cell.tile &amp;&amp; !hidden\" class=\"grid__cell__icon\" :style=\"tilebg(cell.tile)\"></div>\n            <span v-if=\"cell.tiles.length\" class=\"centre\">\n                <span v-for=\"tile in cell.tiles\">\n                    {{tile.position.x}} - {{tile.position.y}}\n                </span>\n            </span>\n        </div>\n    </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -458,7 +458,7 @@ _vue2['default'].use(_vuex2['default']);
 
 var store = new _vuex2['default'].Store({
     state: {
-        sprite: { "width": 20, "height": 10 },
+        sprite: { "width": 40, "height": 20 },
         mapSize: { "x": 50, "y": 50 },
         currentTile: null,
         zoom: 100,
@@ -494,7 +494,8 @@ exports["default"] = {
             for (var x = 0; x < width; x++) {
                 var tile = {
                     gridPosition: { x: x, y: y },
-                    tile: null
+                    tile: null,
+                    tiles: []
                 };
                 columns.push(tile);
             }
