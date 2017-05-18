@@ -33,7 +33,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-25143088", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"./main-panel-controls.vue":2,"./side-bar-controls.vue":3,"vue":18,"vue-hot-reload-api":17}],2:[function(require,module,exports){
+},{"./main-panel-controls.vue":2,"./side-bar-controls.vue":3,"vue":15,"vue-hot-reload-api":14}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -71,7 +71,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-5decd991", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../shared/store":11,"vue":18,"vue-hot-reload-api":17}],3:[function(require,module,exports){
+},{"../../shared/store":11,"vue":15,"vue-hot-reload-api":14}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -126,7 +126,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-7412ce84", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../shared/store":11,"vue":18,"vue-hot-reload-api":17}],4:[function(require,module,exports){
+},{"../../shared/store":11,"vue":15,"vue-hot-reload-api":14}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -166,7 +166,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-33f3c92a", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"./controls/controls.vue":1,"./main-panel/main-panel.vue":5,"./side-bar/side-bar.vue":8,"vue":18,"vue-hot-reload-api":17}],5:[function(require,module,exports){
+},{"./controls/controls.vue":1,"./main-panel/main-panel.vue":5,"./side-bar/side-bar.vue":8,"vue":15,"vue-hot-reload-api":14}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -196,16 +196,12 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-3784d4f0", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"./map.vue":6,"vue":18,"vue-hot-reload-api":17}],6:[function(require,module,exports){
+},{"./map.vue":6,"vue":15,"vue-hot-reload-api":14}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-
-var _stringify = require('babel-runtime/core-js/json/stringify');
-
-var _stringify2 = _interopRequireDefault(_stringify);
 
 var _store = require('../../shared/store');
 
@@ -247,20 +243,15 @@ exports.default = {
     },
     methods: {
         loadGrid: function loadGrid() {
-            var savedGrid = localStorage.getItem("grid");
-            var saveData = JSON.parse(savedGrid);
-            if (saveData) {
-                this.grid = saveData;
-            } else {
-                this.grid = _utils2.default.createGrid(this.mapSize.x, this.mapSize.y);
-            }
+            this.grid = _utils2.default.loadGrid(this.mapSize.x, this.mapSize.y);
         },
         drawTile: function drawTile(cell) {
-            var y = cell.gridPosition.y;
-            var x = cell.gridPosition.x;
-            this.grid[y][x].tiles.push(this.currentTile);
-            var data = (0, _stringify2.default)(this.grid);
-            localStorage.setItem("grid", data);
+            if (this.canDraw(cell.tiles)) {
+                var y = cell.gridPosition.y;
+                var x = cell.gridPosition.x;
+                this.grid[y][x].tiles.push(this.currentTile);
+                _utils2.default.saveGrid(this.grid);
+            }
         },
         tilebg: function tilebg(tile) {
             return _utils2.default.tilebg(tile);
@@ -271,11 +262,15 @@ exports.default = {
                 'transform': 'scale(' + value + ')',
                 'width': 64 * this.mapSize.x + 'px'
             };
+        },
+        canDraw: function canDraw(tiles) {
+            var limit = 3;
+            return tiles.length < limit;
         }
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"grid\" :style=\"calculateGridSize()\">\n    <div class=\"grid__row\" v-for=\"row in grid\">\n        <div @click=\"drawTile(cell)\" class=\"grid__cell\" v-for=\"cell in row\" :class=\"{'grid__cell--unassigned': !cell.tile}\">\n            <div v-if=\"cell.tile &amp;&amp; !hidden\" class=\"grid__cell__icon\" :style=\"tilebg(cell.tile)\"></div>\n            <span v-if=\"cell.tiles.length\" class=\"centre\">\n                <span v-for=\"tile in cell.tiles\">\n                    {{tile.position.x}} - {{tile.position.y}}\n                </span>\n            </span>\n        </div>\n    </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"grid\" :style=\"calculateGridSize()\">\n    <div class=\"grid__row\" v-for=\"row in grid\">\n        <div @click=\"drawTile(cell)\" class=\"grid__cell\" v-for=\"cell in row\" :class=\"{'grid__cell--unassigned': !cell.tiles.length, 'grid__cell--disabled' : !canDraw(cell.tiles)}\">\n            <div v-if=\"cell.tiles.length &amp;&amp; !hidden\">\n                <div class=\"grid__cell__icon\" v-for=\"tile in cell.tiles\" track-by=\"$index\" :style=\"tilebg(tile)\"></div>\n            </div>\n            <span v-if=\"cell.tiles.length &amp;&amp; hidden\" class=\"centre\">\n                <span v-for=\"tile in cell.tiles\" track-by=\"$index\">{{tile.position.x}}{{tile.position.y}}</span>\n            </span>\n        </div>\n    </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -286,8 +281,35 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-539063f4", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../shared/store":11,"../../shared/utils":12,"babel-runtime/core-js/json/stringify":13,"vue":18,"vue-hot-reload-api":17}],7:[function(require,module,exports){
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"options slide-in-right\">options</div>\n"
+},{"../../shared/store":11,"../../shared/utils":12,"vue":15,"vue-hot-reload-api":14}],7:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _store = require("../../shared/store");
+
+var _store2 = _interopRequireDefault(_store);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+    data: function data() {
+        return {
+            defaultWidth: _store2.default.state.mapSize.x,
+            defaultHeight: _store2.default.state.mapSize.y
+        };
+    },
+
+    methods: {
+        createMap: function createMap() {
+            console.log("mapppy");
+        }
+    }
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"options slide-in-right\">\n    <div class=\"options__create-map\">\n        <p>Create new map</p>\n        <label for=\"width\">Width</label>\n        <input type=\"number\" id=\"width\" min=\"10\" max=\"500\">\n        <label for=\"height\">Height</label>\n        <input type=\"number\" id=\"height\" min=\"10\" max=\"500\">\n        <button @click=\"createMap\">Create</button>\n    </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -298,7 +320,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-5a286a23", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":18,"vue-hot-reload-api":17}],8:[function(require,module,exports){
+},{"../../shared/store":11,"vue":15,"vue-hot-reload-api":14}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -358,7 +380,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-03cfb468", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../shared/store":11,"../../shared/utils":12,"./options.vue":7,"./tiles.vue":9,"vue":18,"vue-hot-reload-api":17}],9:[function(require,module,exports){
+},{"../../shared/store":11,"../../shared/utils":12,"./options.vue":7,"./tiles.vue":9,"vue":15,"vue-hot-reload-api":14}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -413,7 +435,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-bc379a6c", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../shared/store":11,"../../shared/utils":12,"vue":18,"vue-hot-reload-api":17}],10:[function(require,module,exports){
+},{"../../shared/store":11,"../../shared/utils":12,"vue":15,"vue-hot-reload-api":14}],10:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -433,7 +455,7 @@ new _vue2['default']({
   }
 });
 
-},{"./components/index.vue":4,"vue":18}],11:[function(require,module,exports){
+},{"./components/index.vue":4,"vue":15}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -480,7 +502,7 @@ var store = new _vuex2['default'].Store({
 exports['default'] = store;
 module.exports = exports['default'];
 
-},{"./utils":12,"vue":18,"vuex":19}],12:[function(require,module,exports){
+},{"./utils":12,"vue":15,"vuex":16}],12:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -494,7 +516,6 @@ exports["default"] = {
             for (var x = 0; x < width; x++) {
                 var tile = {
                     gridPosition: { x: x, y: y },
-                    tile: null,
                     tiles: []
                 };
                 columns.push(tile);
@@ -536,22 +557,26 @@ exports["default"] = {
             "background": "url(" + imgPath + ")",
             "backgroundPosition": "-" + x + "px -" + y + "px"
         };
+    },
+    loadGrid: function loadGrid(x, y) {
+        var savedGrid = localStorage.getItem("grid");
+        var saveData = JSON.parse(savedGrid);
+        var grid = [];
+        if (saveData) {
+            grid = saveData;
+        } else {
+            grid = this.createGrid(x, y);
+        }
+        return grid;
+    },
+    saveGrid: function saveGrid(grid) {
+        var data = JSON.stringify(grid);
+        localStorage.setItem("grid", data);
     }
 };
 module.exports = exports["default"];
 
 },{}],13:[function(require,module,exports){
-module.exports = { "default": require("core-js/library/fn/json/stringify"), __esModule: true };
-},{"core-js/library/fn/json/stringify":14}],14:[function(require,module,exports){
-var core  = require('../../modules/_core')
-  , $JSON = core.JSON || (core.JSON = {stringify: JSON.stringify});
-module.exports = function stringify(it){ // eslint-disable-line no-unused-vars
-  return $JSON.stringify.apply($JSON, arguments);
-};
-},{"../../modules/_core":15}],15:[function(require,module,exports){
-var core = module.exports = {version: '2.4.0'};
-if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
-},{}],16:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -616,7 +641,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],17:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 var Vue // late bind
 var map = Object.create(null)
 var shimmed = false
@@ -917,7 +942,7 @@ function format (id) {
   return match ? match[0] : id
 }
 
-},{}],18:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 (function (process){
 /*!
  * Vue.js v1.0.28
@@ -11158,7 +11183,7 @@ setTimeout(function () {
 
 module.exports = Vue;
 }).call(this,require("7YKIPe"))
-},{"7YKIPe":16}],19:[function(require,module,exports){
+},{"7YKIPe":13}],16:[function(require,module,exports){
 /**
  * vuex v2.3.0
  * (c) 2017 Evan You
