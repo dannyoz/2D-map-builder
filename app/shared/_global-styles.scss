@@ -33,6 +33,11 @@ $controls-height:40px;
 	&:nth-child(4n+4){
 		@include vendorPrefix(animation-delay,(0.3s),$animationVendors);
 	}
+
+	&:nth-child(4n+4){
+		@include vendorPrefix(animation-delay,(0.3s),$animationVendors);
+	}
+	
 }
 
 body {

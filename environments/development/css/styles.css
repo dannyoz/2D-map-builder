@@ -753,6 +753,9 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .slide-in-right:nth-child(4n+4) {
   animation-delay: 0.3s; }
 
+.slide-in-right:nth-child(4n+4) {
+  animation-delay: 0.3s; }
+
 body {
   color: #34495E;
   line-height: 28px;
@@ -880,13 +883,14 @@ body {
     padding-top: 30px; }
     .side-bar .tiles .tile {
       position: relative;
-      margin: 10px;
+      margin: 1px;
       display: inline-flex;
       width: 64px;
       height: 64px;
       font-size: 0.8rem;
       cursor: pointer;
-      color: #3b4149; }
+      color: #3b4149;
+      float: left; }
       .side-bar .tiles .tile--active {
         box-shadow: inset 0 2px 0 #9B59B6, inset 2px 0 0 #9B59B6, inset 0 -2px 0 #9B59B6, inset -2px 0 0 #9B59B6; }
       .side-bar .tiles .tile__icon {

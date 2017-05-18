@@ -253,6 +253,15 @@ exports.default = {
                 _utils2.default.saveGrid(this.grid);
             }
         },
+        deleteTile: function deleteTile(e, cell) {
+            e.preventDefault();
+            if (cell.tiles.length) {
+                var y = cell.gridPosition.y;
+                var x = cell.gridPosition.x;
+                this.grid[y][x].tiles.splice(-1, 1);
+                _utils2.default.saveGrid(this.grid);
+            }
+        },
         tilebg: function tilebg(tile) {
             return _utils2.default.tilebg(tile);
         },
@@ -270,7 +279,7 @@ exports.default = {
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"grid\" :style=\"calculateGridSize()\">\n    <div class=\"grid__row\" v-for=\"row in grid\">\n        <div @click=\"drawTile(cell)\" class=\"grid__cell\" v-for=\"cell in row\" :class=\"{'grid__cell--unassigned': !cell.tiles.length, 'grid__cell--disabled' : !canDraw(cell.tiles)}\">\n            <div v-if=\"cell.tiles.length &amp;&amp; !hidden\">\n                <div class=\"grid__cell__icon\" v-for=\"tile in cell.tiles\" track-by=\"$index\" :style=\"tilebg(tile)\"></div>\n            </div>\n            <span v-if=\"cell.tiles.length &amp;&amp; hidden\" class=\"centre\">\n                <span v-for=\"tile in cell.tiles\" track-by=\"$index\">{{tile.position.x}}{{tile.position.y}}</span>\n            </span>\n        </div>\n    </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"grid\" :style=\"calculateGridSize()\">\n    <div class=\"grid__row\" v-for=\"row in grid\">\n        <div @click=\"drawTile(cell)\" @contextmenu=\"deleteTile($event, cell)\" class=\"grid__cell\" v-for=\"cell in row\" :class=\"{'grid__cell--unassigned': !cell.tiles.length, 'grid__cell--disabled' : !canDraw(cell.tiles)}\">\n            <div v-if=\"cell.tiles.length &amp;&amp; !hidden\">\n                <div class=\"grid__cell__icon\" v-for=\"tile in cell.tiles\" track-by=\"$index\" :style=\"tilebg(tile)\"></div>\n            </div>\n            <span v-if=\"cell.tiles.length &amp;&amp; hidden\" class=\"centre\">\n                <span v-for=\"tile in cell.tiles\" track-by=\"$index\">{{tile.position.x}}{{tile.position.y}}</span>\n            </span>\n        </div>\n    </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -424,7 +433,7 @@ exports.default = {
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"tiles\">\n    <div class=\"tile slide-in-right\" @click=\"selectTile($index)\" :class=\"{'hidden': hidden, 'tile--active': currentIndex == $index}\" v-for=\"tile in tiles\">\n        <div v-if=\"!hidden\" class=\"tile__icon\" :class=\"{'tile--active': currentIndex == $index}\" :style=\"tilebg(tile)\"></div>\n        <span v-if=\"hidden\" class=\"centre\">{{tile.position.x}} - {{tile.position.y}}</span>\n    </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"tiles\">\n    <div class=\"tile slide-in-right\" :class=\"{'hidden': hidden, 'tile--active': currentIndex == $index}\" v-for=\"tile in tiles\" draggable=\"true\">\n        <div v-if=\"!hidden\" class=\"tile__icon\" @click=\"selectTile($index)\" :class=\"{'tile--active': currentIndex == $index}\" :style=\"tilebg(tile)\"></div>\n        <span v-if=\"hidden\" class=\"centre\" @click=\"selectTile($index)\">{{tile.position.x}} - {{tile.position.y}}</span>\n    </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)

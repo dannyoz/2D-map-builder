@@ -1,7 +1,7 @@
 <template>
     <div class="grid" :style="calculateGridSize()">
         <div class="grid__row" v-for="row in grid">
-            <div @click="drawTile(cell)" class="grid__cell" v-for="cell in row" :class="{'grid__cell--unassigned': !cell.tiles.length, 'grid__cell--disabled' : !canDraw(cell.tiles)}">
+            <div @click="drawTile(cell)" @contextmenu="deleteTile($event, cell)" class="grid__cell" v-for="cell in row" :class="{'grid__cell--unassigned': !cell.tiles.length, 'grid__cell--disabled' : !canDraw(cell.tiles)}">
                 <div v-if="cell.tiles.length && !hidden">
                     <div class="grid__cell__icon" v-for="tile in cell.tiles" track-by="$index" :style="tilebg(tile)"></div>
                 </div>
@@ -51,6 +51,15 @@
                     const y = cell.gridPosition.y;
                     const x = cell.gridPosition.x;
                     this.grid[y][x].tiles.push(this.currentTile);
+                    utils.saveGrid(this.grid);
+                }
+            },
+            deleteTile(e, cell) {
+                e.preventDefault();
+                if(cell.tiles.length) {
+                    const y = cell.gridPosition.y;
+                    const x = cell.gridPosition.x;
+                    this.grid[y][x].tiles.splice(-1,1);
                     utils.saveGrid(this.grid);
                 }
             },
