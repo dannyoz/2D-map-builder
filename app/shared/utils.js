@@ -62,5 +62,20 @@ export default {
     saveGrid(grid) {
         const data = JSON.stringify(grid);
         localStorage.setItem("grid", data);
+    },
+    loadSideBar(w, h){
+        const savedTiles = localStorage.getItem("sidebar");
+        const saveData = JSON.parse(savedTiles);
+        let sideBarMap = {};
+        if (saveData) {
+            sideBarMap = saveData;
+        } else {
+            sideBarMap = this.sideBarMap(w,h);
+        }
+        return sideBarMap;
+    },
+    saveSideBar(sideBar) {
+        const data = JSON.stringify(sideBar);
+        localStorage.setItem("sidebar", data);
     }
 }

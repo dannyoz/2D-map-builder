@@ -29,7 +29,19 @@
 
             &--active{
                 $size: 2px;
-                box-shadow: inset 0 $size 0 $secondary, inset $size 0 0 $secondary, inset 0 (-$size) 0 $secondary, inset (-$size) 0 0 $secondary;
+                border:$size solid $secondary;
+            }
+
+            &--dragged {
+                opacity: 0.8;
+                background:red;
+            }
+
+            &--drag-target {
+                $size: 2px;
+                opacity: 0.5;
+                filter: grayscale(50%);
+                border:$size dashed contrast($sidebarCol, 15%);
             }
 
             &__icon {

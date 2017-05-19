@@ -360,15 +360,6 @@ exports.default = {
         options: _options2.default
     },
     computed: {
-        spriteHeight: function spriteHeight() {
-            return _store2.default.state.sprite.height;
-        },
-        spriteWidth: function spriteWidth() {
-            return _store2.default.state.sprite.width;
-        },
-        spriteMap: function spriteMap() {
-            return _utils2.default.sideBarMap(this.spriteWidth, this.spriteHeight);
-        },
         hidden: function hidden() {
             return _utils2.default.isHidden();
         },
@@ -378,7 +369,7 @@ exports.default = {
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"side-bar\">\n    <tiles v-if=\"currentTab == 'tiles'\" :tiles=\"spriteMap.tiles\" :hidden=\"hidden\"></tiles>\n    <options v-if=\"currentTab == 'options'\"></options>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"side-bar\">\n    <tiles v-if=\"currentTab == 'tiles'\" :hidden=\"hidden\"></tiles>\n    <options v-if=\"currentTab == 'options'\"></options>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -409,15 +400,33 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
     data: function data() {
         return {
-            currentIndex: null
+            tiles: [],
+            currentIndex: null,
+            dragIndex: null,
+            targetIndex: null,
+            enterIndex: null,
+            tileSize: 64,
+            border: 1,
+            columns: 5
         };
     },
 
     props: {
-        tiles: Array,
         hidden: Boolean
     },
+    computed: {
+        spriteHeight: function spriteHeight() {
+            return _store2.default.state.sprite.height;
+        },
+        spriteWidth: function spriteWidth() {
+            return _store2.default.state.sprite.width;
+        },
+        spriteMap: function spriteMap() {
+            return _utils2.default.loadSideBar(this.spriteWidth, this.spriteHeight);
+        }
+    },
     ready: function ready() {
+        this.tiles = this.spriteMap.tiles;
         this.selectTile(0);
     },
 
@@ -429,11 +438,43 @@ exports.default = {
             var tile = this.tiles[index];
             this.currentIndex = index;
             _store2.default.commit('selectTile', tile);
+        },
+        tileClass: function tileClass($index) {
+            return {
+                'hidden': this.hidden,
+                'tile--drag-target': $index == this.targetIndex,
+                'tile--dragged': $index == this.dragIndex,
+                'tile--active': this.currentIndex == $index
+            };
+        },
+        dragTile: function dragTile(i) {
+            this.dragIndex = i;
+        },
+        targetDropspace: function targetDropspace(i) {
+            if (i != this.dragIndex && i != this.targetIndex) {
+                this.targetIndex = i;
+            }
+        },
+        allowDrop: function allowDrop(e) {
+            e.preventDefault();
+        },
+        drop: function drop(e) {
+            var remove = this.targetIndex < this.dragIndex ? this.dragIndex + 1 : this.dragIndex;
+            var insert = this.targetIndex < this.dragIndex ? this.targetIndex : this.targetIndex + 1;
+            this.tiles.splice(insert, 0, this.tiles[this.dragIndex]);
+            this.tiles.splice(remove, 1);
+            this.targetIndex = null;
+            this.dragIndex = null;
+
+            _utils2.default.saveSideBar({
+                tiles: this.tiles,
+                grid: this.spriteMap.grid
+            });
         }
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"tiles\">\n    <div class=\"tile slide-in-right\" :class=\"{'hidden': hidden, 'tile--active': currentIndex == $index}\" v-for=\"tile in tiles\" draggable=\"true\">\n        <div v-if=\"!hidden\" class=\"tile__icon\" @click=\"selectTile($index)\" :class=\"{'tile--active': currentIndex == $index}\" :style=\"tilebg(tile)\"></div>\n        <span v-if=\"hidden\" class=\"centre\" @click=\"selectTile($index)\">{{tile.position.x}} - {{tile.position.y}}</span>\n    </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"tiles\">\n    <div class=\"tile\" :class=\"tileClass($index)\" v-for=\"tile in tiles\" track-by=\"$index\" draggable=\"true\" @drop=\"drop($event)\" @dragover=\"allowDrop($event)\" @dragenter=\"targetDropspace($index)\" @dragstart=\"dragTile($index)\">\n        <div v-if=\"!hidden &amp;&amp; tile.position\" class=\"tile__icon\" @click=\"selectTile($index)\" :class=\"{'tile--active': currentIndex == $index}\" :style=\"tilebg(tile)\"></div>\n        <span v-if=\"hidden &amp;&amp; tile.position\" class=\"centre\" @click=\"selectTile($index)\">{{tile.position.x}} - {{tile.position.y}}</span>\n        <span v-if=\"tile.targetTile\" class=\"centre\">derp</span>\n    </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -581,6 +622,21 @@ exports["default"] = {
     saveGrid: function saveGrid(grid) {
         var data = JSON.stringify(grid);
         localStorage.setItem("grid", data);
+    },
+    loadSideBar: function loadSideBar(w, h) {
+        var savedTiles = localStorage.getItem("sidebar");
+        var saveData = JSON.parse(savedTiles);
+        var sideBarMap = {};
+        if (saveData) {
+            sideBarMap = saveData;
+        } else {
+            sideBarMap = this.sideBarMap(w, h);
+        }
+        return sideBarMap;
+    },
+    saveSideBar: function saveSideBar(sideBar) {
+        var data = JSON.stringify(sideBar);
+        localStorage.setItem("sidebar", data);
     }
 };
 module.exports = exports["default"];
