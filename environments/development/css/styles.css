@@ -757,7 +757,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   animation-delay: 0.3s; }
 
 body {
-  color: #34495E;
+  color: #a2aebb;
   line-height: 28px;
   line-height: 1.75rem;
   font-size: 16px;
@@ -807,7 +807,7 @@ body {
   top: 0;
   bottom: 0;
   background-color: #32363c;
-  left: 350px;
+  left: 360px;
   right: 0;
   overflow: auto; }
   .main-panel::-webkit-scrollbar {
@@ -853,7 +853,7 @@ body {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 350px;
+  width: 360px;
   background-color: #16191c;
   left: 0;
   overflow: auto; }
@@ -872,7 +872,7 @@ body {
     display: block;
     height: 40px;
     z-index: 999;
-    width: 340px;
+    width: 350px;
     background: linear-gradient(#16191c, rgba(22, 25, 28, 0));
     position: fixed;
     top: 40px;
@@ -880,7 +880,12 @@ body {
     bottom: auto;
     left: 0; }
   .side-bar .tiles {
-    padding-top: 30px; }
+    padding: 30px 10px 20px 10px;
+    min-height: 1%; }
+    .side-bar .tiles:after {
+      content: "";
+      display: table;
+      clear: both; }
     .side-bar .tiles .tile {
       position: relative;
       margin: 1px;
@@ -920,7 +925,7 @@ body {
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 350px;
+    width: 360px;
     background-color: #22252a;
     left: 0; }
   .controls .main-panel-controls {
@@ -931,7 +936,7 @@ body {
     top: 0;
     bottom: 0;
     background-color: #22252a;
-    left: 350px;
+    left: 360px;
     right: 0; }
     .controls .main-panel-controls__zoom {
       float: right;
@@ -974,3 +979,288 @@ body {
   right: 0;
   bottom: 0;
   left: 0; }
+
+.options {
+  padding: 20px; }
+  .options label {
+    display: block;
+    margin: 0 0 15px 0;
+    font-size: 14px;
+    font-size: 0.875rem; }
+  .options textarea, .options input[type=text], .options input[type=email], .options input[type=password], .options input[type=url], .options input[type=tel], .options input[type=search], .options input[type=date], .options input[type=time], .options input[type=number], .options input.text, .options select {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    outline: none;
+    margin-bottom: 20px;
+    padding: 5px 0 5px 10px;
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-size: 14px;
+    font-size: 0.875rem; }
+  .options input:focus {
+    outline: none; }
+  .options fieldset {
+    width: 100%; }
+  .options textarea, .options input[type=text], .options input[type=email], .options input[type=password], .options input[type=url], .options input[type=tel], .options input[type=search], .options input[type=date], .options input[type=time], .options input[type=number], .options input.text, .options select {
+    background-color: #22252a;
+    border-color: #393e46;
+    color: #DDD; }
+    .options textarea:hover, .options input[type=text]:hover, .options input[type=email]:hover, .options input[type=password]:hover, .options input[type=url]:hover, .options input[type=tel]:hover, .options input[type=search]:hover, .options input[type=date]:hover, .options input[type=time]:hover, .options input[type=number]:hover, .options input.text:hover, .options select:hover {
+      border-color: #505762; }
+    .options textarea:focus, .options input[type=text]:focus, .options input[type=email]:focus, .options input[type=password]:focus, .options input[type=url]:focus, .options input[type=tel]:focus, .options input[type=search]:focus, .options input[type=date]:focus, .options input[type=time]:focus, .options input[type=number]:focus, .options input.text:focus, .options select:focus {
+      color: white;
+      border-color: #a2aebb; }
+  .options button.info, .options .button.info {
+    display: inline-block;
+    outline: none;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    color: #a9e7f0;
+    position: relative;
+    background-color: #1b8898;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 5px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom-color: #13616d;
+    font-weight: 600;
+    line-height: inherit;
+    font-family: inherit;
+    font-size: 16px;
+    font-size: 1rem; }
+    .options button.info.large, .options .button.info.large {
+      padding: 12px 25px;
+      font-size: 20px;
+      font-size: 1.25rem; }
+    .options button.info.small, .options .button.info.small {
+      padding: 5px 10px;
+      font-size: 14px;
+      font-size: 0.875rem; }
+    .options button.info:hover, .options button.info:focus, .options .button.info:hover, .options .button.info:focus {
+      color: #e3f7fa;
+      background-color: #177582; }
+    .options button.info:active, .options .button.info:active {
+      color: white;
+      background-color: #13616d; }
+    .options button.info[class^="block-icon-"]:before, .options button.info[class*=" block-icon-"]:before, .options .button.info[class^="block-icon-"]:before, .options .button.info[class*=" block-icon-"]:before {
+      font-family: 'block-icon-set'; }
+    .options button.info[class^="line-icon-"]:before, .options button.info[class*=" line-icon-"]:before, .options .button.info[class^="line-icon-"]:before, .options .button.info[class*=" line-icon-"]:before {
+      font-family: 'line-icon-set'; }
+    .options button.info[class^="block-icon-"], .options button.info[class*=" block-icon-"], .options button.info[class^="line-icon-"], .options button.info[class*=" line-icon-"], .options .button.info[class^="block-icon-"], .options .button.info[class*=" block-icon-"], .options .button.info[class^="line-icon-"], .options .button.info[class*=" line-icon-"] {
+      padding-right: 50px; }
+      .options button.info[class^="block-icon-"]:before, .options button.info[class*=" block-icon-"]:before, .options button.info[class^="line-icon-"]:before, .options button.info[class*=" line-icon-"]:before, .options .button.info[class^="block-icon-"]:before, .options .button.info[class*=" block-icon-"]:before, .options .button.info[class^="line-icon-"]:before, .options .button.info[class*=" line-icon-"]:before {
+        text-transform: none;
+        line-height: 1;
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        margin-top: -10px;
+        font-weight: normal;
+        font-size: 18px;
+        font-size: 1.125rem; }
+      .options button.info[class^="block-icon-"]:after, .options button.info[class*=" block-icon-"]:after, .options button.info[class^="line-icon-"]:after, .options button.info[class*=" line-icon-"]:after, .options .button.info[class^="block-icon-"]:after, .options .button.info[class*=" block-icon-"]:after, .options .button.info[class^="line-icon-"]:after, .options .button.info[class*=" line-icon-"]:after {
+        content: "";
+        position: absolute;
+        width: 1px;
+        background: #13616d;
+        right: 35px;
+        top: 0;
+        bottom: 0; }
+  .options button.warning, .options .button.warning {
+    display: inline-block;
+    outline: none;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    color: #fbefe0;
+    position: relative;
+    background-color: #d7861e;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 5px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom-color: #aa6a18;
+    font-weight: 600;
+    line-height: inherit;
+    font-family: inherit;
+    font-size: 16px;
+    font-size: 1rem; }
+    .options button.warning.large, .options .button.warning.large {
+      padding: 12px 25px;
+      font-size: 20px;
+      font-size: 1.25rem; }
+    .options button.warning.small, .options .button.warning.small {
+      padding: 5px 10px;
+      font-size: 14px;
+      font-size: 0.875rem; }
+    .options button.warning:hover, .options button.warning:focus, .options .button.warning:hover, .options .button.warning:focus {
+      color: white;
+      background-color: #c1781b; }
+    .options button.warning:active, .options .button.warning:active {
+      color: white;
+      background-color: #aa6a18; }
+    .options button.warning[class^="block-icon-"]:before, .options button.warning[class*=" block-icon-"]:before, .options .button.warning[class^="block-icon-"]:before, .options .button.warning[class*=" block-icon-"]:before {
+      font-family: 'block-icon-set'; }
+    .options button.warning[class^="line-icon-"]:before, .options button.warning[class*=" line-icon-"]:before, .options .button.warning[class^="line-icon-"]:before, .options .button.warning[class*=" line-icon-"]:before {
+      font-family: 'line-icon-set'; }
+    .options button.warning[class^="block-icon-"], .options button.warning[class*=" block-icon-"], .options button.warning[class^="line-icon-"], .options button.warning[class*=" line-icon-"], .options .button.warning[class^="block-icon-"], .options .button.warning[class*=" block-icon-"], .options .button.warning[class^="line-icon-"], .options .button.warning[class*=" line-icon-"] {
+      padding-right: 50px; }
+      .options button.warning[class^="block-icon-"]:before, .options button.warning[class*=" block-icon-"]:before, .options button.warning[class^="line-icon-"]:before, .options button.warning[class*=" line-icon-"]:before, .options .button.warning[class^="block-icon-"]:before, .options .button.warning[class*=" block-icon-"]:before, .options .button.warning[class^="line-icon-"]:before, .options .button.warning[class*=" line-icon-"]:before {
+        text-transform: none;
+        line-height: 1;
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        margin-top: -10px;
+        font-weight: normal;
+        font-size: 18px;
+        font-size: 1.125rem; }
+      .options button.warning[class^="block-icon-"]:after, .options button.warning[class*=" block-icon-"]:after, .options button.warning[class^="line-icon-"]:after, .options button.warning[class*=" line-icon-"]:after, .options .button.warning[class^="block-icon-"]:after, .options .button.warning[class*=" block-icon-"]:after, .options .button.warning[class^="line-icon-"]:after, .options .button.warning[class*=" line-icon-"]:after {
+        content: "";
+        position: absolute;
+        width: 1px;
+        background: #aa6a18;
+        right: 35px;
+        top: 0;
+        bottom: 0; }
+  .options button.danger, .options .button.danger {
+    display: inline-block;
+    outline: none;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    color: #f2c7c7;
+    position: relative;
+    background-color: #ac2828;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 5px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom-color: #831e1e;
+    font-weight: 600;
+    line-height: inherit;
+    font-family: inherit;
+    font-size: 16px;
+    font-size: 1rem; }
+    .options button.danger.large, .options .button.danger.large {
+      padding: 12px 25px;
+      font-size: 20px;
+      font-size: 1.25rem; }
+    .options button.danger.small, .options .button.danger.small {
+      padding: 5px 10px;
+      font-size: 14px;
+      font-size: 0.875rem; }
+    .options button.danger:hover, .options button.danger:focus, .options .button.danger:hover, .options .button.danger:focus {
+      color: white;
+      background-color: #972323; }
+    .options button.danger:active, .options .button.danger:active {
+      color: white;
+      background-color: #831e1e; }
+    .options button.danger[class^="block-icon-"]:before, .options button.danger[class*=" block-icon-"]:before, .options .button.danger[class^="block-icon-"]:before, .options .button.danger[class*=" block-icon-"]:before {
+      font-family: 'block-icon-set'; }
+    .options button.danger[class^="line-icon-"]:before, .options button.danger[class*=" line-icon-"]:before, .options .button.danger[class^="line-icon-"]:before, .options .button.danger[class*=" line-icon-"]:before {
+      font-family: 'line-icon-set'; }
+    .options button.danger[class^="block-icon-"], .options button.danger[class*=" block-icon-"], .options button.danger[class^="line-icon-"], .options button.danger[class*=" line-icon-"], .options .button.danger[class^="block-icon-"], .options .button.danger[class*=" block-icon-"], .options .button.danger[class^="line-icon-"], .options .button.danger[class*=" line-icon-"] {
+      padding-right: 50px; }
+      .options button.danger[class^="block-icon-"]:before, .options button.danger[class*=" block-icon-"]:before, .options button.danger[class^="line-icon-"]:before, .options button.danger[class*=" line-icon-"]:before, .options .button.danger[class^="block-icon-"]:before, .options .button.danger[class*=" block-icon-"]:before, .options .button.danger[class^="line-icon-"]:before, .options .button.danger[class*=" line-icon-"]:before {
+        text-transform: none;
+        line-height: 1;
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        margin-top: -10px;
+        font-weight: normal;
+        font-size: 18px;
+        font-size: 1.125rem; }
+      .options button.danger[class^="block-icon-"]:after, .options button.danger[class*=" block-icon-"]:after, .options button.danger[class^="line-icon-"]:after, .options button.danger[class*=" line-icon-"]:after, .options .button.danger[class^="block-icon-"]:after, .options .button.danger[class*=" block-icon-"]:after, .options .button.danger[class^="line-icon-"]:after, .options .button.danger[class*=" line-icon-"]:after {
+        content: "";
+        position: absolute;
+        width: 1px;
+        background: #831e1e;
+        right: 35px;
+        top: 0;
+        bottom: 0; }
+  .options button.submit, .options .button.submit {
+    display: inline-block;
+    outline: none;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    color: #d9eed1;
+    position: relative;
+    background-color: #54A03A;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 5px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom-color: #407b2c;
+    font-weight: 600;
+    line-height: inherit;
+    font-family: inherit;
+    font-size: 16px;
+    font-size: 1rem; }
+    .options button.submit.large, .options .button.submit.large {
+      padding: 12px 25px;
+      font-size: 20px;
+      font-size: 1.25rem; }
+    .options button.submit.small, .options .button.submit.small {
+      padding: 5px 10px;
+      font-size: 14px;
+      font-size: 0.875rem; }
+    .options button.submit:hover, .options button.submit:focus, .options .button.submit:hover, .options .button.submit:focus {
+      color: white;
+      background-color: #4a8d33; }
+    .options button.submit:active, .options .button.submit:active {
+      color: white;
+      background-color: #407b2c; }
+    .options button.submit[class^="block-icon-"]:before, .options button.submit[class*=" block-icon-"]:before, .options .button.submit[class^="block-icon-"]:before, .options .button.submit[class*=" block-icon-"]:before {
+      font-family: 'block-icon-set'; }
+    .options button.submit[class^="line-icon-"]:before, .options button.submit[class*=" line-icon-"]:before, .options .button.submit[class^="line-icon-"]:before, .options .button.submit[class*=" line-icon-"]:before {
+      font-family: 'line-icon-set'; }
+    .options button.submit[class^="block-icon-"], .options button.submit[class*=" block-icon-"], .options button.submit[class^="line-icon-"], .options button.submit[class*=" line-icon-"], .options .button.submit[class^="block-icon-"], .options .button.submit[class*=" block-icon-"], .options .button.submit[class^="line-icon-"], .options .button.submit[class*=" line-icon-"] {
+      padding-right: 50px; }
+      .options button.submit[class^="block-icon-"]:before, .options button.submit[class*=" block-icon-"]:before, .options button.submit[class^="line-icon-"]:before, .options button.submit[class*=" line-icon-"]:before, .options .button.submit[class^="block-icon-"]:before, .options .button.submit[class*=" block-icon-"]:before, .options .button.submit[class^="line-icon-"]:before, .options .button.submit[class*=" line-icon-"]:before {
+        text-transform: none;
+        line-height: 1;
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        margin-top: -10px;
+        font-weight: normal;
+        font-size: 18px;
+        font-size: 1.125rem; }
+      .options button.submit[class^="block-icon-"]:after, .options button.submit[class*=" block-icon-"]:after, .options button.submit[class^="line-icon-"]:after, .options button.submit[class*=" line-icon-"]:after, .options .button.submit[class^="block-icon-"]:after, .options .button.submit[class*=" block-icon-"]:after, .options .button.submit[class^="line-icon-"]:after, .options .button.submit[class*=" line-icon-"]:after {
+        content: "";
+        position: absolute;
+        width: 1px;
+        background: #407b2c;
+        right: 35px;
+        top: 0;
+        bottom: 0; }
+  .options input[type="number"] {
+    max-width: 5rem; }
+  .options fieldset {
+    min-height: 1%; }
+    .options fieldset:after {
+      content: "";
+      display: table;
+      clear: both; }
+    .options fieldset label {
+      float: left;
+      min-width: 4rem; }
+  .options__option {
+    padding: 20px 0;
+    border-bottom: 1px solid #0e0f10; }

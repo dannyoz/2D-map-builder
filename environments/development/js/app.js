@@ -307,7 +307,8 @@ exports.default = {
     data: function data() {
         return {
             defaultWidth: _store2.default.state.mapSize.x,
-            defaultHeight: _store2.default.state.mapSize.y
+            defaultHeight: _store2.default.state.mapSize.y,
+            publishPath: "/Users/daniel.osborne/repos/2d-prototype/2d-prototype/Assets/Maps"
         };
     },
 
@@ -318,7 +319,7 @@ exports.default = {
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"options slide-in-right\">\n    <div class=\"options__create-map\">\n        <p>Create new map</p>\n        <label for=\"width\">Width</label>\n        <input type=\"number\" id=\"width\" min=\"10\" max=\"500\">\n        <label for=\"height\">Height</label>\n        <input type=\"number\" id=\"height\" min=\"10\" max=\"500\">\n        <button @click=\"createMap\">Create</button>\n    </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"options\">\n    <div class=\"options__option slide-in-right\">\n        <p>Create new map</p>\n        <fieldset>\n            <label for=\"width\">Width</label>\n            <input type=\"number\" id=\"width\" min=\"10\" max=\"500\" v-model=\"defaultWidth\">\n        </fieldset>\n        <fieldset>\n            <label for=\"height\">Height</label>\n            <input type=\"number\" id=\"height\" min=\"10\" max=\"500\" v-model=\"defaultHeight\">\n        </fieldset>\n        <button class=\"submit block-icon-check\" @click=\"createMap\">Create</button>\n    </div>\n    <div class=\"options__option slide-in-right\">\n        <p>Publish</p>\n        <input type=\"text\" v-model=\"publishPath\">\n    </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
