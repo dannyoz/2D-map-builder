@@ -1,6 +1,9 @@
 <template>
     <div class="main-panel-controls">
-        <input type="range" min="10" max="100" v-model="zoom" @change="handleZoom"/>
+        <div class="main-panel-controls__zoom">
+            <i class="block-icon-magnifying-glass"></i> 
+            <input type="range" min="10" max="100" v-model="zoom" @input="handleZoom"/>
+        </div>
     </div>
 </template>
 

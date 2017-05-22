@@ -6,7 +6,7 @@ export default {
             for (let x = 0; x < width; x++) {
                 const tile = {
                     gridPosition: {x,y},
-                    tile: null
+                    tiles: []
                 };
                 columns.push(tile);
             }
@@ -47,5 +47,35 @@ export default {
             "background": `url(${imgPath})`,
             "backgroundPosition" : `-${x}px -${y}px`
         }
+    },
+    loadGrid(x, y) {
+        const savedGrid = localStorage.getItem("grid");
+        const saveData = JSON.parse(savedGrid);
+        let grid = [];
+        if (saveData) {
+            grid = saveData;
+        } else {
+            grid = this.createGrid(x,y);
+        }
+        return grid;
+    },
+    saveGrid(grid) {
+        const data = JSON.stringify(grid);
+        localStorage.setItem("grid", data);
+    },
+    loadSideBar(w, h){
+        const savedTiles = localStorage.getItem("sidebar");
+        const saveData = JSON.parse(savedTiles);
+        let sideBarMap = {};
+        if (saveData) {
+            sideBarMap = saveData;
+        } else {
+            sideBarMap = this.sideBarMap(w,h);
+        }
+        return sideBarMap;
+    },
+    saveSideBar(sideBar) {
+        const data = JSON.stringify(sideBar);
+        localStorage.setItem("sidebar", data);
     }
 }

@@ -5,17 +5,40 @@ $animationVendors : "";
 $transformVendors : "";
 
 // colours
-$primary: $col-wet-asphalt;
+$primary: #a2aebb;
 $secondary: $col-amethyst;
 $sidebarCol : #2d3238;
-$main-panel-col: #383a3e;
+$main-panel-col: #32363c;
 $grid-line-col: contrast($main-panel-col, 5%);
 
-$idebarWidth: 350px;
+// dimensions
+$idebarWidth: 360px;
 $tileSize: 64px;
+$controls-height:40px;
 
 @include normalise;
+@include blockIcons;
 @include googleFont('roboto', body button input);
+@include slideIn("right",40,$bounce,0.6s,0);
+
+.slide-in-right {
+	&:nth-child(4n+2){
+		@include vendorPrefix(animation-delay,(0.1s),$animationVendors);
+	}
+
+	&:nth-child(4n+3){
+		@include vendorPrefix(animation-delay,(0.2s),$animationVendors);
+	}
+
+	&:nth-child(4n+4){
+		@include vendorPrefix(animation-delay,(0.3s),$animationVendors);
+	}
+
+	&:nth-child(4n+4){
+		@include vendorPrefix(animation-delay,(0.3s),$animationVendors);
+	}
+	
+}
 
 body {
 	color:$primary;
