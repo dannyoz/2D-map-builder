@@ -87,7 +87,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
     data: function data() {
         return {
-            current: 0,
+            current: 1,
             tabs: [{
                 'title': 'Build',
                 'component': 'tiles',
@@ -225,6 +225,10 @@ exports.default = {
     },
     ready: function ready() {
         this.loadGrid();
+        _store2.default.commit("setMapSize", {
+            "x": this.grid[0].length,
+            "y": this.grid.length
+        });
     },
 
     computed: {
@@ -241,12 +245,17 @@ exports.default = {
             return _store2.default.state.zoom;
         }
     },
+    watch: {
+        mapSize: function mapSize() {
+            this.loadGrid();
+        }
+    },
     methods: {
         loadGrid: function loadGrid() {
             this.grid = _utils2.default.loadGrid(this.mapSize.x, this.mapSize.y);
         },
         drawTile: function drawTile(cell) {
-            if (this.canDraw(cell.tiles)) {
+            if (this.canDraw(cell.tiles) && this.currentTile) {
                 var y = cell.gridPosition.y;
                 var x = cell.gridPosition.x;
                 this.grid[y][x].tiles.push(this.currentTile);
@@ -291,35 +300,46 @@ if (module.hot) {(function () {  module.hot.accept()
   }
 })()}
 },{"../../shared/store":11,"../../shared/utils":12,"vue":15,"vue-hot-reload-api":14}],7:[function(require,module,exports){
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _store = require("../../shared/store");
+var _store = require('../../shared/store');
 
 var _store2 = _interopRequireDefault(_store);
+
+var _utils = require('../../shared/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
     data: function data() {
         return {
-            defaultWidth: _store2.default.state.mapSize.x,
-            defaultHeight: _store2.default.state.mapSize.y,
+            defaultWidth: String(_store2.default.state.mapSize.x),
+            defaultHeight: String(_store2.default.state.mapSize.y),
             publishPath: "/Users/daniel.osborne/repos/2d-prototype/2d-prototype/Assets/Maps"
         };
     },
 
     methods: {
         createMap: function createMap() {
-            console.log("mapppy");
+            _utils2.default.clearGrid();
+            _store2.default.commit("setMapSize", {
+                "x": Number(this.defaultWidth),
+                "y": Number(this.defaultHeight)
+            });
+        },
+        publish: function publish() {
+            console.log("publish");
         }
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"options\">\n    <div class=\"options__option slide-in-right\">\n        <p>Create new map</p>\n        <fieldset>\n            <label for=\"width\">Width</label>\n            <input type=\"number\" id=\"width\" min=\"10\" max=\"500\" v-model=\"defaultWidth\">\n        </fieldset>\n        <fieldset>\n            <label for=\"height\">Height</label>\n            <input type=\"number\" id=\"height\" min=\"10\" max=\"500\" v-model=\"defaultHeight\">\n        </fieldset>\n        <button class=\"submit block-icon-check\" @click=\"createMap\">Create</button>\n    </div>\n    <div class=\"options__option slide-in-right\">\n        <p>Publish</p>\n        <input type=\"text\" v-model=\"publishPath\">\n    </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"options\">\n    <div class=\"options__option slide-in-right\">\n        <div class=\"options__option__map-creator\">\n            <p>Create new map</p>\n            <fieldset>\n                <label for=\"width\">Width</label>\n                <input type=\"number\" id=\"width\" min=\"10\" max=\"500\" v-model=\"defaultWidth\">\n            </fieldset>\n            <fieldset>\n                <label for=\"height\">Height</label>\n                <input type=\"number\" id=\"height\" min=\"10\" max=\"500\" v-model=\"defaultHeight\">\n            </fieldset>\n            <button class=\"submit block-icon-check\" @click=\"createMap\">Create</button>\n        </div>\n    </div>\n    <div class=\"options__option slide-in-right\">\n        <p>Publish</p>\n        <input type=\"text\" v-model=\"publishPath\">\n        <button class=\"submit block-icon-check\" @click=\"publish\">Publish</button>\n    </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -330,7 +350,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-5a286a23", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../shared/store":11,"vue":15,"vue-hot-reload-api":14}],8:[function(require,module,exports){
+},{"../../shared/store":11,"../../shared/utils":12,"vue":15,"vue-hot-reload-api":14}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -546,6 +566,9 @@ var store = new _vuex2['default'].Store({
         },
         switchTab: function switchTab(state, tab) {
             state.currentTab = tab;
+        },
+        setMapSize: function setMapSize(state, size) {
+            state.mapSize = size;
         }
     }
 });
@@ -623,6 +646,9 @@ exports["default"] = {
     saveGrid: function saveGrid(grid) {
         var data = JSON.stringify(grid);
         localStorage.setItem("grid", data);
+    },
+    clearGrid: function clearGrid() {
+        localStorage.removeItem("grid");
     },
     loadSideBar: function loadSideBar(w, h) {
         var savedTiles = localStorage.getItem("sidebar");

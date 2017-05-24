@@ -1251,7 +1251,7 @@ body {
         top: 0;
         bottom: 0; }
   .options input[type="number"] {
-    max-width: 5rem; }
+    max-width: 3.5rem; }
   .options fieldset {
     min-height: 1%; }
     .options fieldset:after {
@@ -1263,4 +1263,12 @@ body {
       min-width: 4rem; }
   .options__option {
     padding: 20px 0;
-    border-bottom: 1px solid #0e0f10; }
+    border-bottom: 1px solid #0e0f10;
+    min-height: 1%; }
+    .options__option:after {
+      content: "";
+      display: table;
+      clear: both; }
+    .options__option__map-creator {
+      float: left;
+      width: 8rem; }

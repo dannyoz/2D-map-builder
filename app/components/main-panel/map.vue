@@ -27,6 +27,10 @@
         },
         ready() {
             this.loadGrid();
+            store.commit("setMapSize", {
+                "x": this.grid[0].length,
+                "y": this.grid.length
+            });
         },
         computed: {
             currentTile() {
@@ -42,12 +46,17 @@
                 return store.state.zoom;
             }
         },
+        watch: {
+            mapSize() {
+                this.loadGrid();
+            },
+        },
         methods: {
             loadGrid() {
                 this.grid = utils.loadGrid(this.mapSize.x, this.mapSize.y);
             },
             drawTile(cell) {
-                if(this.canDraw(cell.tiles)){
+                if(this.canDraw(cell.tiles) && this.currentTile){
                     const y = cell.gridPosition.y;
                     const x = cell.gridPosition.x;
                     this.grid[y][x].tiles.push(this.currentTile);

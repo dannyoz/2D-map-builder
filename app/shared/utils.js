@@ -63,6 +63,9 @@ export default {
         const data = JSON.stringify(grid);
         localStorage.setItem("grid", data);
     },
+    clearGrid() {
+        localStorage.removeItem("grid");
+    },
     loadSideBar(w, h){
         const savedTiles = localStorage.getItem("sidebar");
         const saveData = JSON.parse(savedTiles);

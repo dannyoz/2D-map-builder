@@ -9,7 +9,7 @@
     @include flatButton('submit',#54A03A);
 
     input[type="number"] {
-        max-width: 5rem;
+        max-width: 3.5rem;
     }
 
     fieldset {
@@ -24,5 +24,11 @@
     &__option {
         padding: 20px 0;
         border-bottom: 1px solid #0e0f10;
+        @include clearFix;
+
+        &__map-creator {
+            float:left;
+            width:8rem;
+        }
     }
 }

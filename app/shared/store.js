@@ -20,7 +20,10 @@ const store = new Vuex.Store({
         },
         switchTab(state, tab) {
             state.currentTab = tab;
-        }
+        },
+        setMapSize(state, size) {
+            state.mapSize = size;
+        },
     }
 });
 
