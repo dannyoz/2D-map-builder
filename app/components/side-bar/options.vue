@@ -16,7 +16,14 @@
         </div>
         <div class="options__option slide-in-right">
             <p>Publish</p>
-            <input type="text" v-model="publishPath"/>
+            <fieldset>
+                <label for="file-name">File name</label>
+                <input type="text" id="file-name" v-model="fileName"/>
+            </fieldset>
+            <fieldset>
+                <label for="path">Path</label>
+                <input type="text" id="path" v-model="publishPath"/>
+            </fieldset>
             <button class="submit block-icon-check" @click="publish">Publish</button>
         </div>
     </div>
@@ -25,13 +32,15 @@
 <script>
     import store from '../../shared/store';
     import utils from '../../shared/utils';
+    import apiService from '../../shared/api-service';
 
     export default {
         data(){
             return {
                 defaultWidth: String(store.state.mapSize.x),
                 defaultHeight: String(store.state.mapSize.y),
-                publishPath: "/Users/daniel.osborne/repos/2d-prototype/2d-prototype/Assets/Maps"
+                publishPath: "/Users/daniel.osborne/repos/2d-prototype/2d-prototype/Assets/Maps",
+                fileName: "test"
             };
         },
         methods: {
@@ -43,7 +52,10 @@
                 });
             },
             publish() {
-                console.log("publish");
+                // apiService.post('/api/publish', {
+
+                // })
+                console.log(this.fileName);
             }
         }
     }
