@@ -32,7 +32,8 @@
 <script>
     import store from '../../shared/store';
     import utils from '../../shared/utils';
-    import apiService from '../../shared/api-service';
+    import ApiService from '../../shared/api-service';
+    const apiService = new ApiService();
 
     export default {
         data(){
@@ -52,10 +53,17 @@
                 });
             },
             publish() {
-                // apiService.post('/api/publish', {
-
-                // })
-                console.log(this.fileName);
+                apiService.post('/api/publish', {
+                    path: this.publishPath,
+                    fileName: this.fileName,
+                    map: utils.loadGrid(1, 1),
+                }).end((err, data) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log("Map saved successfully!");
+                    }
+                });
             }
         }
     }

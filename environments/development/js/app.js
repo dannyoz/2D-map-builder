@@ -320,6 +320,8 @@ var _apiService2 = _interopRequireDefault(_apiService);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var apiService = new _apiService2.default();
+
 exports.default = {
     data: function data() {
         return {
@@ -339,10 +341,17 @@ exports.default = {
             });
         },
         publish: function publish() {
-            // apiService.post('/api/publish', {
-
-            // })
-            console.log(this.fileName);
+            apiService.post('/api/publish', {
+                path: this.publishPath,
+                fileName: this.fileName,
+                map: _utils2.default.loadGrid(1, 1)
+            }).end(function (err, data) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log("Map saved successfully!");
+                }
+            });
         }
     }
 };
