@@ -9,7 +9,8 @@ const store = new Vuex.Store({
         mapSize: {"x": 50, "y": 50},
         currentTile: null,
         zoom: 100,
-        currentTab:null
+        currentTab:null,
+        alert: null
     },
     mutations: {
         selectTile(state, tile) {
@@ -23,6 +24,9 @@ const store = new Vuex.Store({
         },
         setMapSize(state, size) {
             state.mapSize = size;
+        },
+        setAlert(state, alert) {
+            state.alert = alert;
         },
     }
 });

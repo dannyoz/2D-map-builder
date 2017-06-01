@@ -31,6 +31,11 @@
                 "x": this.grid[0].length,
                 "y": this.grid.length
             });
+
+            store.commit('setAlert', {
+                type: 'info',
+                message: 'app loaded'
+            });
         },
         computed: {
             currentTile() {

@@ -33,7 +33,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-25143088", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"./main-panel-controls.vue":2,"./side-bar-controls.vue":3,"vue":21,"vue-hot-reload-api":20}],2:[function(require,module,exports){
+},{"./main-panel-controls.vue":2,"./side-bar-controls.vue":3,"vue":22,"vue-hot-reload-api":21}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -71,7 +71,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-5decd991", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../shared/store":12,"vue":21,"vue-hot-reload-api":20}],3:[function(require,module,exports){
+},{"../../shared/store":13,"vue":22,"vue-hot-reload-api":21}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -126,7 +126,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-7412ce84", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../shared/store":12,"vue":21,"vue-hot-reload-api":20}],4:[function(require,module,exports){
+},{"../../shared/store":13,"vue":22,"vue-hot-reload-api":21}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -145,17 +145,22 @@ var _mainPanel = require('./main-panel/main-panel.vue');
 
 var _mainPanel2 = _interopRequireDefault(_mainPanel);
 
+var _alerts = require('./main-panel/alerts.vue');
+
+var _alerts2 = _interopRequireDefault(_alerts);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
 	components: {
 		controls: _controls2.default,
 		sideBar: _sideBar2.default,
-		mainPanel: _mainPanel2.default
+		mainPanel: _mainPanel2.default,
+		alerts: _alerts2.default
 	}
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<controls></controls>\n<div class=\"app\">\n\t<side-bar></side-bar>\n\t<main-panel></main-panel>\n</div>\t\t\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<controls></controls>\n<div class=\"app\">\n\t<side-bar></side-bar>\n\t<main-panel></main-panel>\n\t<alerts></alerts>\n</div>\t\t\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -166,7 +171,55 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-33f3c92a", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"./controls/controls.vue":1,"./main-panel/main-panel.vue":5,"./side-bar/side-bar.vue":8,"vue":21,"vue-hot-reload-api":20}],5:[function(require,module,exports){
+},{"./controls/controls.vue":1,"./main-panel/alerts.vue":5,"./main-panel/main-panel.vue":6,"./side-bar/side-bar.vue":9,"vue":22,"vue-hot-reload-api":21}],5:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _store = require('../../shared/store');
+
+var _store2 = _interopRequireDefault(_store);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+    computed: {
+        alert: function alert() {
+            return _store2.default.state.alert;
+        }
+    },
+    watch: {
+        alert: function alert() {
+            this.timeout();
+        }
+    },
+    methods: {
+        close: function close() {
+            _store2.default.commit('setAlert', null);
+        },
+        timeout: function timeout() {
+            var self = this;
+            setTimeout(function () {
+                self.close();
+            }, 3500);
+        }
+    }
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"alert\" v-if=\"alert\">\n    <div class=\"message slide-in-up\" :class=\"[alert.type]\">\n        <p>{{alert.message}}</p>\n        <i class=\"alert__close block-icon-cross\" @click=\"close\"></i>\n    </div>\n</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-238650a2", module.exports)
+  } else {
+    hotAPI.update("_v-238650a2", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"../../shared/store":13,"vue":22,"vue-hot-reload-api":21}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -196,7 +249,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-3784d4f0", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"./map.vue":6,"vue":21,"vue-hot-reload-api":20}],6:[function(require,module,exports){
+},{"./map.vue":7,"vue":22,"vue-hot-reload-api":21}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -228,6 +281,11 @@ exports.default = {
         _store2.default.commit("setMapSize", {
             "x": this.grid[0].length,
             "y": this.grid.length
+        });
+
+        _store2.default.commit('setAlert', {
+            type: 'info',
+            message: 'app loaded'
         });
     },
 
@@ -299,7 +357,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-539063f4", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../shared/store":12,"../../shared/utils":13,"vue":21,"vue-hot-reload-api":20}],7:[function(require,module,exports){
+},{"../../shared/store":13,"../../shared/utils":14,"vue":22,"vue-hot-reload-api":21}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -341,17 +399,22 @@ exports.default = {
             });
         },
         publish: function publish() {
-            apiService.post('/api/publish', {
-                path: this.publishPath,
-                fileName: this.fileName,
-                map: _utils2.default.loadGrid(1, 1)
-            }).end(function (err, data) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log("Map saved successfully!");
-                }
+
+            _store2.default.commit('setAlert', {
+                type: 'success',
+                message: 'You dunnit'
             });
+            // apiService.post('/api/publish', {
+            //     path: this.publishPath,
+            //     fileName: this.fileName,
+            //     map: utils.loadGrid(1, 1),
+            // }).end((err, data) => {
+            //     if (err) {
+            //         console.log(err);
+            //     } else {
+            //         console.log("Map saved successfully!");
+            //     }
+            // });
         }
     }
 };
@@ -367,7 +430,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-5a286a23", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../shared/api-service":11,"../../shared/store":12,"../../shared/utils":13,"vue":21,"vue-hot-reload-api":20}],8:[function(require,module,exports){
+},{"../../shared/api-service":12,"../../shared/store":13,"../../shared/utils":14,"vue":22,"vue-hot-reload-api":21}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -418,7 +481,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-03cfb468", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../shared/store":12,"../../shared/utils":13,"./options.vue":7,"./tiles.vue":9,"vue":21,"vue-hot-reload-api":20}],9:[function(require,module,exports){
+},{"../../shared/store":13,"../../shared/utils":14,"./options.vue":8,"./tiles.vue":10,"vue":22,"vue-hot-reload-api":21}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -523,7 +586,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-bc379a6c", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../shared/store":12,"../../shared/utils":13,"vue":21,"vue-hot-reload-api":20}],10:[function(require,module,exports){
+},{"../../shared/store":13,"../../shared/utils":14,"vue":22,"vue-hot-reload-api":21}],11:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -543,7 +606,7 @@ new _vue2['default']({
   }
 });
 
-},{"./components/index.vue":4,"vue":21}],11:[function(require,module,exports){
+},{"./components/index.vue":4,"vue":22}],12:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -583,7 +646,7 @@ var ApiService = (function () {
 exports['default'] = ApiService;
 module.exports = exports['default'];
 
-},{"superagent":16}],12:[function(require,module,exports){
+},{"superagent":17}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -612,7 +675,8 @@ var store = new _vuex2['default'].Store({
         mapSize: { "x": 50, "y": 50 },
         currentTile: null,
         zoom: 100,
-        currentTab: null
+        currentTab: null,
+        alert: null
     },
     mutations: {
         selectTile: function selectTile(state, tile) {
@@ -626,6 +690,9 @@ var store = new _vuex2['default'].Store({
         },
         setMapSize: function setMapSize(state, size) {
             state.mapSize = size;
+        },
+        setAlert: function setAlert(state, alert) {
+            state.alert = alert;
         }
     }
 });
@@ -633,7 +700,7 @@ var store = new _vuex2['default'].Store({
 exports['default'] = store;
 module.exports = exports['default'];
 
-},{"./utils":13,"vue":21,"vuex":22}],13:[function(require,module,exports){
+},{"./utils":14,"vue":22,"vuex":23}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -725,7 +792,7 @@ exports["default"] = {
 };
 module.exports = exports["default"];
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 
 /**
  * Expose `Emitter`.
@@ -890,7 +957,7 @@ Emitter.prototype.hasListeners = function(event){
   return !! this.listeners(event).length;
 };
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -955,7 +1022,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 /**
  * Root reference for iframes.
  */
@@ -1933,7 +2000,7 @@ request.put = function(url, data, fn){
   return req;
 };
 
-},{"./is-object":17,"./request":19,"./request-base":18,"emitter":14}],17:[function(require,module,exports){
+},{"./is-object":18,"./request":20,"./request-base":19,"emitter":15}],18:[function(require,module,exports){
 /**
  * Check if `obj` is an object.
  *
@@ -1948,7 +2015,7 @@ function isObject(obj) {
 
 module.exports = isObject;
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 /**
  * Module of mixed-in functions shared between node and client code
  */
@@ -2322,7 +2389,7 @@ exports.send = function(data){
   return this;
 };
 
-},{"./is-object":17}],19:[function(require,module,exports){
+},{"./is-object":18}],20:[function(require,module,exports){
 // The node and browser modules expose versions of this with the
 // appropriate constructor function bound as first argument
 /**
@@ -2356,7 +2423,7 @@ function request(RequestConstructor, method, url) {
 
 module.exports = request;
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 var Vue // late bind
 var map = Object.create(null)
 var shimmed = false
@@ -2657,7 +2724,7 @@ function format (id) {
   return match ? match[0] : id
 }
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 (function (process){
 /*!
  * Vue.js v1.0.28
@@ -12898,7 +12965,7 @@ setTimeout(function () {
 
 module.exports = Vue;
 }).call(this,require("7YKIPe"))
-},{"7YKIPe":15}],22:[function(require,module,exports){
+},{"7YKIPe":16}],23:[function(require,module,exports){
 /**
  * vuex v2.3.0
  * (c) 2017 Evan You
@@ -13709,4 +13776,4 @@ return index;
 
 })));
 
-},{}]},{},[10])
+},{}]},{},[11])

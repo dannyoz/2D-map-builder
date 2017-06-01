@@ -20,6 +20,7 @@ $controls-height:40px;
 @include blockIcons;
 @include googleFont('roboto', body button input);
 @include slideIn("right",40,$bounce,0.6s,0);
+@include slideIn("up");
 
 .slide-in-right {
 	&:nth-child(4n+2){

@@ -53,17 +53,22 @@
                 });
             },
             publish() {
-                apiService.post('/api/publish', {
-                    path: this.publishPath,
-                    fileName: this.fileName,
-                    map: utils.loadGrid(1, 1),
-                }).end((err, data) => {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        console.log("Map saved successfully!");
-                    }
+
+                store.commit('setAlert', {
+                    type: 'success',
+                    message: 'You dunnit'
                 });
+                // apiService.post('/api/publish', {
+                //     path: this.publishPath,
+                //     fileName: this.fileName,
+                //     map: utils.loadGrid(1, 1),
+                // }).end((err, data) => {
+                //     if (err) {
+                //         console.log(err);
+                //     } else {
+                //         console.log("Map saved successfully!");
+                //     }
+                // });
             }
         }
     }

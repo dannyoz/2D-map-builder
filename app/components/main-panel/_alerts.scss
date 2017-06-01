@@ -1,0 +1,23 @@
+.alert {
+    top: 3rem;
+    @include centre(x);
+    @include message('info',#98DAE4);
+    @include message('success',#98E4A6);
+    @include message('warning',#FFC558);
+    @include message('danger',#FF9191);
+
+    .message {
+        @include clearFix;
+    }
+
+    p {
+        float: left;
+        margin-bottom: 0;
+    }
+
+    &__close {
+        margin-left: 1rem;
+        float: right;
+        cursor: pointer;
+    }
+}
