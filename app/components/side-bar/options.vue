@@ -54,21 +54,24 @@
             },
             publish() {
 
-                store.commit('setAlert', {
-                    type: 'success',
-                    message: 'You dunnit'
+                apiService.post('/api/publish', {
+                    path: this.publishPath,
+                    fileName: this.fileName,
+                    map: utils.loadGrid(1, 1),
+                }).end((err, data) => {
+                    if (err) {
+                        store.commit('setAlert', {
+                            type: 'error',
+                            message: err,
+                            notimer: true
+                        });
+                    } else {
+                        store.commit('setAlert', {
+                            type: 'success',
+                            message: 'Map saved'
+                        });
+                    }
                 });
-                // apiService.post('/api/publish', {
-                //     path: this.publishPath,
-                //     fileName: this.fileName,
-                //     map: utils.loadGrid(1, 1),
-                // }).end((err, data) => {
-                //     if (err) {
-                //         console.log(err);
-                //     } else {
-                //         console.log("Map saved successfully!");
-                //     }
-                // });
             }
         }
     }

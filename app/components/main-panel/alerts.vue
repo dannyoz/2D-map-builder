@@ -12,12 +12,14 @@
     export default {
         computed: {
             alert() {
-                return store.state.alert
+                return store.state.alert;
             }
         },
         watch: {
             alert() {
-                this.timeout();
+                if (!alert.notimer) {
+                    this.timeout();
+                }
             },
         },
         methods: {
@@ -25,10 +27,9 @@
                 store.commit('setAlert', null);
             },
             timeout() {
-                const self = this;
                 setTimeout(() => {
-                    self.close();
-                }, 3500);
+                    this.close();
+                }, 4500);
             },
         }
     }

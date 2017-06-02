@@ -191,19 +191,32 @@ exports.default = {
         }
     },
     watch: {
-        alert: function alert() {
-            this.timeout();
-        }
+        alert: function (_alert) {
+            function alert() {
+                return _alert.apply(this, arguments);
+            }
+
+            alert.toString = function () {
+                return _alert.toString();
+            };
+
+            return alert;
+        }(function () {
+            if (!alert.notimer) {
+                this.timeout();
+            }
+        })
     },
     methods: {
         close: function close() {
             _store2.default.commit('setAlert', null);
         },
         timeout: function timeout() {
-            var self = this;
+            var _this = this;
+
             setTimeout(function () {
-                self.close();
-            }, 3500);
+                _this.close();
+            }, 4500);
         }
     }
 };
@@ -400,21 +413,24 @@ exports.default = {
         },
         publish: function publish() {
 
-            _store2.default.commit('setAlert', {
-                type: 'success',
-                message: 'You dunnit'
+            apiService.post('/api/publish', {
+                path: this.publishPath,
+                fileName: this.fileName,
+                map: _utils2.default.loadGrid(1, 1)
+            }).end(function (err, data) {
+                if (err) {
+                    _store2.default.commit('setAlert', {
+                        type: 'error',
+                        message: err,
+                        notimer: true
+                    });
+                } else {
+                    _store2.default.commit('setAlert', {
+                        type: 'success',
+                        message: 'Map saved'
+                    });
+                }
             });
-            // apiService.post('/api/publish', {
-            //     path: this.publishPath,
-            //     fileName: this.fileName,
-            //     map: utils.loadGrid(1, 1),
-            // }).end((err, data) => {
-            //     if (err) {
-            //         console.log(err);
-            //     } else {
-            //         console.log("Map saved successfully!");
-            //     }
-            // });
         }
     }
 };
