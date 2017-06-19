@@ -19,7 +19,6 @@
 <script>
     import utils from '../../shared/utils';
     import store from '../../shared/store';
-
     export default {
         data(){
             return {

@@ -87,7 +87,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
     data: function data() {
         return {
-            current: 1,
+            current: 0,
             tabs: [{
                 'title': 'Build',
                 'component': 'tiles',

@@ -11,7 +11,7 @@
     export default {
         data(){
             return {
-                current: 1,
+                current: 0,
                 tabs: [{
                     'title':'Build',
                     'component': 'tiles',
